@@ -2,6 +2,7 @@ import { combineReducers } from 'redux'
 import leads from './leads'
 import errors from './errors'
 import messages from './messages'
+import auth from './auth'
 
 // can be like 
 // leads: leads
@@ -11,5 +12,6 @@ import messages from './messages'
 export default combineReducers( {
     leads: leads,
     errors,
-    messages
+    messages,
+    auth
 })
