@@ -1,7 +1,7 @@
 import axios from 'axios'
-import { returnErrors } from './messages'
+import { returnError } from './messages'
 
-import { USER_LOADED, USER_LOADING, AUTH_ERROR, LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT_SUCCESS } from './types'
+import { USER_LOADED, USER_LOADING, AUTH_ERROR, LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT_SUCCESS, REGISTER_FAIL, REGISTER_SUCCESS } from './types'
 
 // CHECK TOKEN & LOAD USER
 export const loadUser = () => (dispatch, getState) => {
@@ -17,7 +17,7 @@ export const loadUser = () => (dispatch, getState) => {
                 payload: res.data
             })
         }).catch(err => {
-            dispatch(returnErrors(err.response.data, err.response.status))
+            dispatch(returnError(err.response.data, err.response.status))
             dispatch({
                 type: AUTH_ERROR
             })
@@ -50,30 +50,61 @@ export const login = (username, password) => dispatch => {
             })
         })
         .catch(err => {
-            dispatch(returnErrors(err.response.data, err.response.status))
+            dispatch(returnError(err.response.data, err.response.status))
             dispatch({
                 type: LOGIN_FAIL
             })
         })
 }
 
+// REGISTER USER
+export const register = ({ username, password, email }) => dispatch => {
+
+    // HEADERS
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+
+    // Request Body
+    const body = JSON.stringify({
+        username: username,
+        password: password,
+        email, email
+    })
+
+    // load the user
+    axios
+        .post("/api/auth/register", body, config)
+        .then(res => {
+            dispatch({
+                type: REGISTER_SUCCESS,
+                payload: res.data
+            })
+        })
+        .catch(err => {
+            dispatch(returnError(err.response.data, err.response.status))
+            dispatch({
+                type: REGISTER_FAIL
+            })
+        })
+}
+
 // LOGOUT USER
 export const logout = () => (dispatch, getState) => {
-    console.log("did lotout get here")
     // load the user
     // Mote have to pass null as replacement for body or it wont work
     axios
         .post('/api/auth/logout/', null, tokenConfig(getState))
         .then(res => {
-            console.log("did lotout get success")
             dispatch({
                 type: LOGOUT_SUCCESS
             })
         })
         .catch(err => {
-            console.log("did lotout get here error")
             console.log(err)
-            dispatch(returnErrors(err.response.data, err.response.status))
+            dispatch(returnError(err.response.data, err.response.status))
         })
 }
 
