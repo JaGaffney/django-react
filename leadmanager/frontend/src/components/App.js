@@ -13,6 +13,7 @@ const alertOptions = {
 
 // Created Imports
 import Header from './layout/Header'
+import Footer from './layout/Footer'
 import Dashboard from './leads/Dashboard'
 import Alerts from './layout/Alerts'
 import Login from './accounts/Login'
@@ -45,6 +46,7 @@ class App extends Component {
                             <Route exact path="/register" component={Register} />
                         </Switch>
                     </div>
+                    <Footer />
                 </>
             </Router>
             </AlertProvider>
