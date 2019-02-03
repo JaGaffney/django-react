@@ -3,10 +3,13 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+
+{% load static %}
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Lead Manager</title>
+        <link rel="shortcut icon" href="{% static 'frontend/favicon1.png' %}"/>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
@@ -18,7 +21,7 @@
     <body>
         <div id="app"></div>
         
-        {% load static %}
+        
         <script src="{% static 'frontend/main.js'  %}"></script>
     </body>
 </html>
