@@ -1,7 +1,13 @@
-// CRUD data
+// Leads data
 export const GET_LEADS = "GET_LEADS";
 export const DELETE_LEAD = "DELETE_LEAD";
 export const ADD_LEAD = "ADD_LEAD";
+export const CLEAR_LEADS = 'CLEAR_LEADS';
+
+// Jobs data
+export const GET_JOBS = "GET_JOBS";
+export const DELETE_JOB = "DELETE_JOB";
+export const ADD_JOB = "ADD_JOB";
 
 // Alert messages instead of console.log
 export const GET_ERRORS = "GET_ERRORS";

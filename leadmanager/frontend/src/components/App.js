@@ -12,23 +12,31 @@ const alertOptions = {
 }
 
 // Created Imports
+//layout
 import Header from './layout/Header'
 import Footer from './layout/Footer'
-import Dashboard from './leads/Dashboard'
 import Alerts from './layout/Alerts'
+
+// pages
+import Home from './home/Home'
+import LeadDashboard from './leads/Dashboard'
+import JobDashboard from './jobs/JobsDashboard'
 import Login from './accounts/Login'
 import Register from './accounts/Register'
+
+// other
 import PrivateRoute from "./common/PrivateRoute"
 
 
 // Redux store
 import { Provider } from 'react-redux'
 import store from '../store'
-import { loadUser } from '../actions/auth'
+import { loadUser } from "../actions/auth"
 
 class App extends Component {
     componentDidMount() {
-        store.dispatch(loadUser)
+        // loadUser is a function
+        store.dispatch(loadUser())
     }
 
     render() {
@@ -41,7 +49,9 @@ class App extends Component {
                     <Alerts />
                     <div className="container">
                         <Switch>
-                            <PrivateRoute exact path="/" component={Dashboard} />
+                            <PrivateRoute exact path="/" component={Home} />
+                            <PrivateRoute exact path="/leads" component={LeadDashboard} />
+                            <PrivateRoute exact path="/jobs" component={JobDashboard} />
                             <Route exact path="/login" component={Login} />
                             <Route exact path="/register" component={Register} />
                         </Switch>

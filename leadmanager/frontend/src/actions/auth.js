@@ -1,12 +1,14 @@
 import axios from 'axios'
 import { returnError } from './messages'
 
-import { USER_LOADED, USER_LOADING, AUTH_ERROR, LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT_SUCCESS, REGISTER_FAIL, REGISTER_SUCCESS } from './types'
+import { USER_LOADED, USER_LOADING, AUTH_ERROR, LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT_SUCCESS, REGISTER_FAIL, REGISTER_SUCCESS, CLEAR_LEADS } from './types'
 
 // CHECK TOKEN & LOAD USER
 export const loadUser = () => (dispatch, getState) => {
     // User Loading
-    dispatch({ type: USER_LOADING })
+    dispatch({ 
+        type: USER_LOADING 
+    })
 
     // load the user
     axios
@@ -93,38 +95,38 @@ export const register = ({ username, password, email }) => dispatch => {
 
 // LOGOUT USER
 export const logout = () => (dispatch, getState) => {
-    // load the user
-    // Mote have to pass null as replacement for body or it wont work
     axios
-        .post('/api/auth/logout/', null, tokenConfig(getState))
-        .then(res => {
-            dispatch({
-                type: LOGOUT_SUCCESS
-            })
+      .post("/api/auth/logout/", null, tokenConfig(getState))
+      .then(res => {
+        dispatch({ 
+            type: CLEAR_LEADS
+        });
+        dispatch({
+          type: LOGOUT_SUCCESS
         })
-        .catch(err => {
-            console.log(err)
-            dispatch(returnError(err.response.data, err.response.status))
-        })
-}
+      })
+      .catch(err => {
+        dispatch(returnErrors(err.response.data, err.response.status));
+      });
+  };
 
 
 // Setup config with token and user deatils - helper function
 export const tokenConfig = getState => {
     // Get token from state
     const token = getState().auth.token
-
-    // HEADERS
+  
+    // Headers
     const config = {
-        headers: {
-            'Content-Type': 'application/json'
-        }
+      headers: {
+        "Content-Type": "application/json"
+      }
     }
-
-    // IF token add to headers config
+  
+    // If token, add to headers config
     if (token) {
-        config.headers['Authorization'] = `Token ${token}`
+      config.headers["Authorization"] = `Token ${token}`
     }
-
-    return config
+  
+    return config;
 }

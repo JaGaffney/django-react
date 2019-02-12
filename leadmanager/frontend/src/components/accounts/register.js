@@ -12,7 +12,7 @@ export class Register extends Component {
         password: '',
         password2: ''
     }
-
+    
     static propTypes = {
         register: PropTypes.func.isRequired,
         isAuthenticated: PropTypes.bool
