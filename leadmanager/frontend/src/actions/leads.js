@@ -12,10 +12,10 @@ export const getLeads = () => (dispatch, getState) => {
             dispatch({
                 type: GET_LEADS,
                 payload: res.data
-            });
+            })
         })
         .catch(err => dispatch(returnError(err.response.data, err.response.status)));
-};
+}
 
 // DELETE LEADS
 export const deleteLead = id => (dispatch, getState) => {
@@ -26,10 +26,10 @@ export const deleteLead = id => (dispatch, getState) => {
             dispatch({
             type: DELETE_LEAD,
             payload: id
-            });
+            })
         })
         .catch(err => console.log(err));
-};
+}
 
 // Add LEad
 export const addLead = (lead) => (dispatch, getState) => {
@@ -40,7 +40,7 @@ export const addLead = (lead) => (dispatch, getState) => {
             dispatch({
                 type: ADD_LEAD,
                 payload: res.data
-            });
+            })
         })
         .catch(err => dispatch(returnError(err.response.data, err.response.status)))
-};
+}

@@ -3,10 +3,6 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getJobs, deleteJob } from "../../actions/jobs";
 
-import JobsSingle from './JobsSingle'
-
-
-
 export class Jobs extends Component {
   static propTypes = {
     jobs: PropTypes.array.isRequired,

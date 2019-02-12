@@ -1,7 +1,6 @@
 import axios from "axios";
 import { createMessage, returnError } from './messages'
 import { tokenConfig } from './auth'
-import { tokenConfigJobs } from './auth'
 
 import { GET_JOBS, DELETE_JOB, ADD_JOB } from "./types";
 
@@ -30,4 +29,18 @@ export const deleteJob = id => (dispatch, getState) => {
             })
         })
         .catch(err => console.log(err));
+}
+
+// Add Job
+export const addJob = (job) => (dispatch, getState) => {
+    axios
+        .post("/api/jobs/", job, tokenConfig(getState))
+        .then(res => {
+            dispatch(createMessage({ addJob: 'Job Added' }))
+            dispatch({
+                type: ADD_JOB,
+                payload: res.data
+            })
+        })
+        .catch(err => dispatch(returnError(err.response.data, err.response.status)))
 }
