@@ -17,8 +17,11 @@ export class Header extends Component {
     const { isAuthenticated, user } = this.props.auth
 
     const authLinks = (
-        <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
-            <span className="navbar-text mr-3"><strong>{ user ? `Welcome ${user.username}` : '' }</strong></span>
+        <>
+            <span className="navbar-text mr-3"><strong>{ user ? `Logged in as ${user.username}:` : '' }</strong></span>
+            <li className="nav-item">
+                {'  '}
+            </li>
             <li className="nav-item">
                 <Link to="/jobs" className="nav-link">Jobs</Link>
             </li>
@@ -26,20 +29,23 @@ export class Header extends Component {
                 <Link to="/leads" className="nav-link">Leads</Link>
             </li>
             <li className="nav-item">
-                <button onClick={this.props.logout} className="nav-link btn btn-info btnsm text-light">Logout</button>
+                <Link to="/staff" className="nav-link">Employees</Link>
             </li>
-        </ul>
+            <li className="nav-item">
+                <button onClick={this.props.logout} className="btn btn-primary">Logout</button>
+            </li>
+        </>
     )
 
     const guestLinks = (
-        <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
+        <>
             <li className="nav-item">
                 <Link to="/register" className="nav-link">Register</Link>
             </li>
             <li className="nav-item">
                 <Link to="/login" className="nav-link">Login</Link>
             </li>
-        </ul>
+        </>
     )
 
     return (
@@ -48,10 +54,12 @@ export class Header extends Component {
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
-                <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
+                <div className="collapse navbar-collapse justify-content-between" id="navbarTogglerDemo01">
                     <a className="navbar-brand" href="#">CRM</a>
+                <ul className="navbar-nav mt-2 mt-lg-0">
+                    {isAuthenticated ? authLinks : guestLinks}
+                </ul>
                 </div>
-                {isAuthenticated ? authLinks : guestLinks}
             </div>
         </nav>
     )
