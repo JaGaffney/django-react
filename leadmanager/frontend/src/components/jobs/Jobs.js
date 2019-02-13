@@ -3,7 +3,18 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getJobs, deleteJob } from "../../actions/jobs";
 
+import Lottie from 'react-lottie';
+import animationData from './bin.json'
+
+import Animation from './Animation'
+
 export class Jobs extends Component {
+  state = {
+    isStopped: false,
+    isLooped: false
+  }
+
+
   static propTypes = {
     jobs: PropTypes.array.isRequired,
     getJobs: PropTypes.func.isRequired,
@@ -11,7 +22,7 @@ export class Jobs extends Component {
   }
 
   componentDidMount() {
-    this.props.getJobs();
+    this.props.getJobs()
   }
 
   loadSingleJob(job) {
@@ -20,7 +31,24 @@ export class Jobs extends Component {
     //<JobsSingle singleJob={job} />
   }
 
+  onDeleteHover(){
+    this.setState({
+      isStopped: true,
+      isLooped: true
+    })
+  }
+
+  onDeleteLeave(){
+    this.setState({
+      isStopped: false,
+      isLooped: false
+    })
+  }
+
   render() {
+
+    let animationItem = <Animation animation={animationData} stopped={this.state.isStopped} isLoop={this.state.isLooped} />
+
     return (
       <>
         <h2>Jobs</h2>
@@ -51,13 +79,16 @@ export class Jobs extends Component {
                 <td>{job.end_date.slice(0, -10)}</td>
                 <td>${job.cost}</td>
                 <td>
+                  <div style={{ width: '3rem', height: '3rem' }}>
                     <button 
-                      className="btn btn-danger btn-sm"
+                      className="btn btn-danger"
                       onClick={this.props.deleteJob.bind(this, job.id)}
+                      onMouseEnter={this.onDeleteHover.bind(this)}
+                      onMouseLeave={this.onDeleteLeave.bind(this)}
                     >
-                      {" "}
-                      Delete
+                      {animationItem}
                     </button>
+                  </div>
                 </td>
               </tr>
             )) }

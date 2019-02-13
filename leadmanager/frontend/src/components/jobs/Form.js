@@ -3,7 +3,12 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { addJob } from "../../actions/jobs";
 
-export class Form extends Component {
+import Lottie from 'react-lottie';
+import animationData from './submit.json'
+
+export class Form extends Component { 
+
+// owner needs to be whoever is logged in
   state = {
     job_name: '',
     job_type: '',
@@ -11,10 +16,11 @@ export class Form extends Component {
     client_contact_name: '',
     client_contact_email: '',
     message: '',
-    owner: '4',
+    owner: this.props.auth,
     start_date: '',
     end_date: '',
-    cost: ''
+    cost: '',
+    isStopped: true
   }
 
   static propTypes = {
@@ -25,9 +31,28 @@ export class Form extends Component {
 
   onSubmit = e => {
     e.preventDefault()
-    const { job_name, job_type, client_business_name, client_contact_name, client_contact_email, message, owner, start_date, end_date, cost } = this.state
+    // data gathering
+    let { job_name, job_type, client_business_name, client_contact_name, client_contact_email, message, owner, start_date, end_date, cost } = this.state
+    
+    let validData = true
+    // data validation
+    // default time values
+    if (start_date === "") {
+      start_date = "0001-01-01T00:00"
+    }
+    if (end_date === "") {
+      end_date = "0001-01-01T00:00"
+    }
+
+    if (job_name === "" || job_type === "" || client_business_name === "" || client_contact_name === "" || client_contact_email === "" || cost === ""){
+      validData = false
+    }
+
+    // creates a valid object that can be sent to the API
     const job = { job_name, job_type, client_business_name, client_contact_name, client_contact_email, message, owner, start_date, end_date, cost }
     this.props.addJob(job)
+    
+    // resetting data back to default values
     this.setState({
         job_name: '',
         job_type: '',
@@ -37,16 +62,33 @@ export class Form extends Component {
         message: '',
         start_date: '',
         end_date: '',
-        cost: ''
+        cost: '' 
     })
+
+    // if the data was processed correctly then the animation logo will start
+    if (validData){
+      this.setState({
+        isStopped: false,
+      })
+    }
   }
 
   render() {
     const { job_name, job_type, client_business_name, client_contact_name, client_contact_email, message, start_date, end_date, cost } = this.state
 
+    const defaultOptions = {
+        loop: 1,
+        autoplay: false,
+        animationData: animationData,
+        rendererSettings: {
+          preserveAspectRatio: 'xMidYMid slice'
+        }
+    }
+
     return (
       <div className="card card-body mt-4 mb-4">
         <h2>Add Job</h2>
+
         <form onSubmit={this.onSubmit}>
 
           <div className="form-group">
@@ -151,17 +193,28 @@ export class Form extends Component {
             />
           </div>
 
-          <div className="form-group">
-            <button type="submit" className="btn btn-primary">
-              Submit
-            </button>
-          </div>
+          <div className="container h-100">
+            <div className="row h-100 justify-content-center align-items-center">
+                <div className="form-group">
+                    <button type="submit" className="btn">
+                        <Lottie options={defaultOptions}
+                            width={500}
+                            height={300}
+                            isStopped={this.state.isStopped}
+                        />
+
+                    </button>
+                </div>
+            </div>
+        </div>
         </form>
       </div>
     )
   }
 }
 
+const mapStateToProps = state => ({
+  auth: state.auth.user.id
+})
 
-
-export default connect(null, { addJob })(Form)
+export default connect(mapStateToProps, { addJob })(Form)

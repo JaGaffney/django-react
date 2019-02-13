@@ -31,6 +31,25 @@ export class Alerts extends Component {
             if (error.msg.username) {
                 alert.error(error.msg.username.join())
             }
+            // Jobs page
+            if (error.msg.job_name) {
+                alert.error(`Name: ${error.msg.job_name.join()}`)
+            }
+            if (error.msg.job_type) {
+                alert.error(`Type: ${error.msg.job_type.join()}`)
+            }
+            if (error.msg.client_business_name) {
+                alert.error(`Business Name: ${error.msg.client_business_name.join()}`)
+            }
+            if (error.msg.client_contact_name) {
+                alert.error(`Contact Name: ${error.msg.client_contact_name.join()}`)
+            }
+            if (error.msg.client_business_email) {
+                alert.error(`Contact Email: ${error.msg.client_business_email.join()}`)
+            }
+            if (error.msg.cost) {
+                alert.error(`Cost: ${error.msg.cost.join()}`)
+            }
         }
         if (message !== prevProps.message) {
             if (message.deleteLead) {
