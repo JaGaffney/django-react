@@ -11,11 +11,9 @@ export class JobsDashboard extends Component {
   onFormHandler(){
     this.setState(prevState => {
       const updatedState = prevState
-      return {loadForm: !updatedState.loadForm}
-      
+      return {loadForm: !updatedState.loadForm} 
     })
   }
-
 
   render() {
 
@@ -25,19 +23,17 @@ export class JobsDashboard extends Component {
     } else {
       formPage
     }
-    
-    
 
     return (
       <>
       <br></br>
+      <Jobs />
         <div className="container h-100">
           <div className="row h-100 justify-content-center align-items-center">
-            <button className="btn btn-primary" onClick={this.onFormHandler.bind(this)}>Add Job</button>
+            <button className="btn btn-primary" onClick={this.onFormHandler.bind(this)}>{this.state.loadForm ? 'Hide' : 'Add'} new Job</button>
           </div>
         </div>
         {formPage}
-        <Jobs />
       </>
     )
   }

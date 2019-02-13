@@ -27,13 +27,15 @@ export class Dashboard extends Component {
     return (
       <>
       <br></br>
+      <Leads />
+      <br></br>
         <div className="container h-100">
           <div className="row h-100 justify-content-center align-items-center">
-            <button className="btn btn-primary" onClick={this.onFormHandler.bind(this)}>Add Job</button>
+            <button className="btn btn-primary" onClick={this.onFormHandler.bind(this)}>{this.state.loadForm ? 'Hide' : 'Add'} new Lead</button>
           </div>
         </div>
         {formPage}
-      <Leads />
+      
     </>
     )
   }

@@ -3,9 +3,6 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getJobs, deleteJob } from "../../actions/jobs";
 
-import Lottie from 'react-lottie';
-import animationData from './bin.json'
-
 import Animation from './Animation'
 
 export class Jobs extends Component {
@@ -47,7 +44,7 @@ export class Jobs extends Component {
 
   render() {
 
-    let animationItem = <Animation animation={animationData} stopped={this.state.isStopped} isLoop={this.state.isLooped} />
+    let animationItem = <Animation stopped={this.state.isStopped} isLoop={this.state.isLooped} />
 
     return (
       <>

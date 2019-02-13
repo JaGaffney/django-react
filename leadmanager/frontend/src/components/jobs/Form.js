@@ -87,7 +87,7 @@ export class Form extends Component {
 
     return (
       <div className="card card-body mt-4 mb-4">
-        <h2>Add Job</h2>
+        <h2>Create new Job</h2>
 
         <form onSubmit={this.onSubmit}>
 
@@ -183,7 +183,7 @@ export class Form extends Component {
           </div>
 
           <div className="form-group">
-            <label>Message</label>
+            <label>Additional Info</label>
             <textarea
               className="form-control"
               type="text"
@@ -193,7 +193,7 @@ export class Form extends Component {
             />
           </div>
 
-          <div className="container h-100">
+          <div className="container h-40">
             <div className="row h-100 justify-content-center align-items-center">
                 <div className="form-group">
                     <button type="submit" className="btn">
