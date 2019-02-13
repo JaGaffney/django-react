@@ -58,6 +58,12 @@ export class Alerts extends Component {
             if (message.addLead) {
                 alert.success(message.addLead)
             }
+            if (message.deleteJob) {
+                alert.success(message.deleteJob)
+            }
+            if (message.addJob) {
+                alert.success(message.addJob)
+            }
             if (message.passwordNotMatch) {
                 alert.error(message.passwordNotMatch)
             }
