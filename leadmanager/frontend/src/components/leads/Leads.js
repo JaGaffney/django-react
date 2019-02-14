@@ -3,12 +3,12 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getLeads, deleteLead } from "../../actions/leads";
 
-import Animation from '../jobs/Animation'
+import Animation from '../animations/Animation'
+import animationData from '../animations/bin.json'
 
 export class Leads extends Component {
   state = {
-    isStopped: false,
-    isLooped: false
+    isStopped: true
   }
 
   static propTypes = {
@@ -23,20 +23,19 @@ export class Leads extends Component {
 
   onDeleteHover(){
     this.setState({
-      isStopped: true,
-      isLooped: true
+      isStopped: false
     })
   }
 
   onDeleteLeave(){
     this.setState({
-      isStopped: false,
-      isLooped: false
+      isStopped: true
     })
   }
 
   render() {
-    let animationItem = <Animation stopped={this.state.isStopped} isLoop={this.state.isLooped} />
+    // loads the lottie animation
+    let animationItem = <Animation animationItemData={animationData} stopped={this.state.isStopped} isLoop={false} />
 
     return (
       <>

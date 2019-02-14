@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { addJob } from "../../actions/jobs";
 
-import Lottie from 'react-lottie';
-import animationData from './submit.json'
+import animationData from '../animations/submit2.json'
+import Animation from '../animations/Animation'
 
 export class Form extends Component { 
 
@@ -29,6 +29,7 @@ export class Form extends Component {
 
   onChange = e => this.setState({ [e.target.name]: e.target.value })
 
+  // on submit button click
   onSubmit = e => {
     e.preventDefault()
     // data gathering
@@ -68,7 +69,7 @@ export class Form extends Component {
     // if the data was processed correctly then the animation logo will start
     if (validData){
       this.setState({
-        isStopped: false,
+        isStopped: false
       })
     }
   }
@@ -76,14 +77,7 @@ export class Form extends Component {
   render() {
     const { job_name, job_type, client_business_name, client_contact_name, client_contact_email, message, start_date, end_date, cost } = this.state
 
-    const defaultOptions = {
-        loop: 1,
-        autoplay: false,
-        animationData: animationData,
-        rendererSettings: {
-          preserveAspectRatio: 'xMidYMid slice'
-        }
-    }
+    let animationItem = <Animation animationItemData={animationData} stopped={this.state.isStopped} isLoop={false} />
 
     return (
       <div className="card card-body mt-4 mb-4">
@@ -196,13 +190,8 @@ export class Form extends Component {
           <div className="container h-40">
             <div className="row h-100 justify-content-center align-items-center">
                 <div className="form-group">
-                    <button type="submit" className="btn">
-                        <Lottie options={defaultOptions}
-                            width={500}
-                            height={300}
-                            isStopped={this.state.isStopped}
-                        />
-
+                    <button type="submit" className="btn btn-primary">
+                      {animationItem}
                     </button>
                 </div>
             </div>

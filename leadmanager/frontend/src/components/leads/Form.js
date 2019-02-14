@@ -3,11 +3,15 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { addLead } from "../../actions/leads";
 
+import animationData from '../animations/submit2.json'
+import Animation from '../animations/Animation'
+
 export class Form extends Component {
   state = {
     name: '',
     email: '',
-    message: ''
+    message: '',
+    isStopped: true
   }
 
   static propTypes = {
@@ -20,16 +24,32 @@ export class Form extends Component {
     e.preventDefault()
     const { name, email, message } = this.state
     const lead = { name, email, message }
+
+    // basic data validation, mostly on backend only for react
+    let validData = true
+    if (name === "" || email === "" || message === ""){
+      validData = false
+    }
+
     this.props.addLead(lead)
     this.setState({
       name: "",
       email: "",
       message: ""
     })
+
+    // if the data was processed correctly then the animation logo will start
+    if (validData){
+      this.setState({
+        isStopped: false,
+      })
+    }
   }
 
   render() {
     const { name, email, message } = this.state
+
+    let animationItem = <Animation animationItemData={animationData} stopped={this.state.isStopped} isLoop={false} />
 
     return (
       <div className="card card-body mt-4 mb-4">
@@ -66,9 +86,13 @@ export class Form extends Component {
             />
           </div>
           <div className="form-group">
-            <button type="submit" className="btn btn-primary">
-              Submit
-            </button>
+            <div className="row h-100 justify-content-center align-items-center">
+              <div className="form-group">
+                  <button type="submit" className="btn btn-primary">
+                    {animationItem}
+                  </button>
+              </div>
+            </div>
           </div>
         </form>
       </div>

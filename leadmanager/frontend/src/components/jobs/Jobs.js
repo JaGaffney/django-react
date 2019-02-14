@@ -3,14 +3,13 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getJobs, deleteJob } from "../../actions/jobs";
 
-import Animation from './Animation'
+import Animation from '../animations/Animation'
+import animationData from '../animations/bin.json'
 
 export class Jobs extends Component {
   state = {
-    isStopped: false,
-    isLooped: false
+    isStopped: true
   }
-
 
   static propTypes = {
     jobs: PropTypes.array.isRequired,
@@ -30,21 +29,19 @@ export class Jobs extends Component {
 
   onDeleteHover(){
     this.setState({
-      isStopped: true,
-      isLooped: true
+      isStopped: false
     })
   }
 
   onDeleteLeave(){
     this.setState({
-      isStopped: false,
-      isLooped: false
+      isStopped: true
     })
   }
 
   render() {
 
-    let animationItem = <Animation stopped={this.state.isStopped} isLoop={this.state.isLooped} />
+    let animationItem = <Animation animationItemData={animationData} stopped={this.state.isStopped} isLoop={false} />
 
     return (
       <>
