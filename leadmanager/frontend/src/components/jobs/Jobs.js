@@ -6,9 +6,13 @@ import { getJobs, deleteJob } from "../../actions/jobs";
 import Animation from '../animations/Animation'
 import animationData from '../animations/bin.json'
 
+import JobsSingle from './JobsSingle'
+
 export class Jobs extends Component {
   state = {
-    isStopped: true
+    isStopped: true,
+    loadSingle: false,
+    jobData: ""
   }
 
   static propTypes = {
@@ -21,12 +25,21 @@ export class Jobs extends Component {
     this.props.getJobs()
   }
 
+  // Single page component handlering
   loadSingleJob(job) {
-    //console.log(job)
-    console.log("hello, you shouldn't be here")
-    //<JobsSingle singleJob={job} />
+    this.setState({
+      loadSingle: true,
+      jobData: job
+    })
   }
 
+  onJobsPageHandler(){
+    this.setState({
+      loadSingle: false
+    })
+  }
+
+  // animation button hovering effects
   onDeleteHover(){
     this.setState({
       isStopped: false
@@ -39,9 +52,14 @@ export class Jobs extends Component {
     })
   }
 
+
+
   render() {
 
-    let animationItem = <Animation animationItemData={animationData} stopped={this.state.isStopped} isLoop={false} />
+    let singleJobWebPage
+    if (this.state.loadSingle){
+      singleJobWebPage = <JobsSingle jobInfo={this.state.jobData} JobsPageHandler={this.onJobsPageHandler.bind(this)}/>
+    }
 
     return (
       <>
@@ -63,7 +81,7 @@ export class Jobs extends Component {
           <tbody>
             { this.props.jobs.map(job => (
 
-              <tr key={job.id} onClick={this.loadSingleJob.bind(this, job)}>
+              <tr key={job.id} onClick={this.loadSingleJob.bind(this, job)} style={{cursor: 'pointer'}}>
                 <td>{job.id}</td>
                 <td>{job.job_name}</td>
                 <td>{job.job_type}</td>
@@ -73,14 +91,14 @@ export class Jobs extends Component {
                 <td>{job.end_date.slice(0, -10)}</td>
                 <td>${job.cost}</td>
                 <td>
-                  <div style={{ width: '3rem', height: '3rem' }}>
+                  <div style={{ width: '3rem' }}>
                     <button 
                       className="btn btn-danger"
                       onClick={this.props.deleteJob.bind(this, job.id)}
                       onMouseEnter={this.onDeleteHover.bind(this)}
                       onMouseLeave={this.onDeleteLeave.bind(this)}
                     >
-                      {animationItem}
+                      <Animation animationItemData={animationData} stopped={this.state.isStopped} isLoop={false} name={job.id} />
                     </button>
                   </div>
                 </td>
@@ -89,6 +107,7 @@ export class Jobs extends Component {
           </tbody>
         
         </table>
+        {singleJobWebPage}
       </>
     )
   }

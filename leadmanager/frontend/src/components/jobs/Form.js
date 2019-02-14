@@ -80,9 +80,10 @@ export class Form extends Component {
     let animationItem = <Animation animationItemData={animationData} stopped={this.state.isStopped} isLoop={false} />
 
     return (
-      <div className="card card-body mt-4 mb-4">
+        <>
         <h2>Create new Job</h2>
 
+        <div className="card card-body mt-4 mb-4">
         <form onSubmit={this.onSubmit}>
 
           <div className="form-group">
@@ -98,13 +99,19 @@ export class Form extends Component {
 
           <div className="form-group">
             <label>Type</label>
-            <input
+            <select
               className="form-control"
               type="text"
               name="job_type"
               onChange={this.onChange}
               value={job_type}
-            />
+            >
+            <option value="Development">Development</option>
+            <option value="Research">Research</option>
+            <option value="Design">Design</option>
+            <option value="Quote">Quote</option>
+            <option value="Other">Other</option>
+          </select>
           </div>
 
           <div className="form-group">
@@ -198,6 +205,7 @@ export class Form extends Component {
         </div>
         </form>
       </div>
+      </>
     )
   }
 }
