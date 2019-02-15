@@ -7,7 +7,7 @@ export class Animation extends Component {
   
   render() {
 
-
+    // default properties of the animation
     const defaultOptions = {
       loop: false,
       autoplay: this.props.stopped,

@@ -17,6 +17,7 @@ export class Leads extends Component {
     deleteLead: PropTypes.func.isRequired
   }
 
+  // onload gets all of the leads data from the api
   componentDidMount() {
     this.props.getLeads();
   }

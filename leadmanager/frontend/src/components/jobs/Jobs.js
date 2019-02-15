@@ -52,10 +52,9 @@ export class Jobs extends Component {
     })
   }
 
-
-
   render() {
 
+    // loads the single web page when the state has changed from a click which passes in data from w/e table location it was in
     let singleJobWebPage
     if (this.state.loadSingle){
       singleJobWebPage = <JobsSingle jobInfo={this.state.jobData} JobsPageHandler={this.onJobsPageHandler.bind(this)}/>
@@ -81,15 +80,15 @@ export class Jobs extends Component {
           <tbody>
             { this.props.jobs.map(job => (
 
-              <tr key={job.id} onClick={this.loadSingleJob.bind(this, job)} style={{cursor: 'pointer'}}>
-                <td>{job.id}</td>
-                <td>{job.job_name}</td>
-                <td>{job.job_type}</td>
-                <td>{job.client_business_name}</td>
-                <td>{job.owner}</td>
-                <td>{job.start_date.slice(0, -10)}</td>
-                <td>{job.end_date.slice(0, -10)}</td>
-                <td>${job.cost}</td>
+              <tr key={job.id}  style={{cursor: 'pointer'}}>
+                <td onClick={this.loadSingleJob.bind(this, job)}>{job.id}</td>
+                <td onClick={this.loadSingleJob.bind(this, job)}>{job.job_name}</td>
+                <td onClick={this.loadSingleJob.bind(this, job)}>{job.job_type}</td>
+                <td onClick={this.loadSingleJob.bind(this, job)}>{job.client_business_name}</td>
+                <td onClick={this.loadSingleJob.bind(this, job)}>{job.owner}</td>
+                <td onClick={this.loadSingleJob.bind(this, job)}>{job.start_date.slice(0, -10)}</td>
+                <td onClick={this.loadSingleJob.bind(this, job)}>{job.end_date.slice(0, -10)}</td>
+                <td onClick={this.loadSingleJob.bind(this, job)}>${job.cost}</td>
                 <td>
                   <div style={{ width: '3rem' }}>
                     <button 

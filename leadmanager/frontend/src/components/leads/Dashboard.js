@@ -7,6 +7,7 @@ export class Dashboard extends Component {
     loadForm: false
   }
 
+  // switches between states for show/add form button
   onFormHandler(){
     this.setState(prevState => {
       const updatedState = prevState
@@ -17,6 +18,7 @@ export class Dashboard extends Component {
 
   render() {
 
+    // loads the form when the button is clicked
     let formPage 
     if (this.state.loadForm){
       formPage = <Form />

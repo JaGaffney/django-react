@@ -9,14 +9,13 @@ export class JobsSingle extends Component {
         <div className="card card-body mt-4 mb-4">
         
           <div className="float-right">
-            <button type="button" className="close btn btn-warning" aria-label="Close" onClick={this.props.JobsPageHandler}>
+            <button type="button" className="close btn btn-danger" aria-label="Close" onClick={this.props.JobsPageHandler}>
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
 
           <h3>Name: {this.props.jobInfo.job_name} ID: {this.props.jobInfo.id}</h3> 
  
-
             <div className="card text-white bg-primary mb-3" style={{ minWidth: '15rem',  marginTop: '2rem' }}>
                 <div className="card-header">Contact Info</div>
                   <div className="card-body">

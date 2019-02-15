@@ -8,10 +8,11 @@ import Animation from '../animations/Animation'
 
 export class Form extends Component { 
 
-// owner needs to be whoever is logged in
+// owner needs to be whoever is logged in, currently is setting to the id rather than the users name
+// sets default for job type
   state = {
     job_name: '',
-    job_type: '',
+    job_type: 'Development',
     client_business_name: '',
     client_contact_name: '',
     client_contact_email: '',
@@ -27,7 +28,10 @@ export class Form extends Component {
     addJob: PropTypes.func.isRequired
   }
 
-  onChange = e => this.setState({ [e.target.name]: e.target.value })
+  // checks for changes inside the form
+  onChange = e => {
+    this.setState({ [e.target.name]: e.target.value })
+  }
 
   // on submit button click
   onSubmit = e => {
@@ -77,8 +81,6 @@ export class Form extends Component {
   render() {
     const { job_name, job_type, client_business_name, client_contact_name, client_contact_email, message, start_date, end_date, cost } = this.state
 
-    let animationItem = <Animation animationItemData={animationData} stopped={this.state.isStopped} isLoop={false} />
-
     return (
         <>
         <h2>Create new Job</h2>
@@ -106,7 +108,7 @@ export class Form extends Component {
               onChange={this.onChange}
               value={job_type}
             >
-            <option value="Development">Development</option>
+            <option defaultValue="Development">Development</option>
             <option value="Research">Research</option>
             <option value="Design">Design</option>
             <option value="Quote">Quote</option>
@@ -151,7 +153,7 @@ export class Form extends Component {
             <label>Start Date</label>
             <input
               className="form-control"
-              type="datetime-local"
+              type="date"
               name="start_date"
               onChange={this.onChange}
               value={start_date}
@@ -162,7 +164,7 @@ export class Form extends Component {
             <label>End Date</label>
             <input
               className="form-control"
-              type="datetime-local"
+              type="date"
               name="end_date"
               onChange={this.onChange}
               value={end_date}
@@ -198,7 +200,7 @@ export class Form extends Component {
             <div className="row h-100 justify-content-center align-items-center">
                 <div className="form-group">
                     <button type="submit" className="btn btn-primary">
-                      {animationItem}
+                      <Animation animationItemData={animationData} stopped={this.state.isStopped} isLoop={false} />
                     </button>
                 </div>
             </div>
