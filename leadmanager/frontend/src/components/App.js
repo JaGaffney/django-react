@@ -21,6 +21,7 @@ import Alerts from './layout/Alerts'
 import Home from './home/Home'
 import LeadDashboard from './leads/Dashboard'
 import JobDashboard from './jobs/JobsDashboard'
+import Employees from './employees/Employees'
 import Login from './accounts/Login'
 import Register from './accounts/Register'
 
@@ -52,6 +53,7 @@ class App extends Component {
                             <PrivateRoute exact path="/" component={Home} />
                             <PrivateRoute exact path="/leads" component={LeadDashboard} />
                             <PrivateRoute exact path="/jobs" component={JobDashboard} />
+                            <PrivateRoute exact path="/employees" component={Employees} />
                             <Route exact path="/login" component={Login} />
                             <Route exact path="/register" component={Register} />
                         </Switch>

@@ -29,7 +29,7 @@ export class Header extends Component {
                 <Link to="/leads" className="nav-link">Leads</Link>
             </li>
             <li className="nav-item">
-                <Link to="/staff" className="nav-link">Employees</Link>
+                <Link to="/employees" className="nav-link">Employees</Link>
             </li>
             <li className="nav-item">
                 <button onClick={this.props.logout} className="btn btn-primary">Logout</button>

@@ -4,6 +4,7 @@ import jobs from './jobs'
 import errors from './errors'
 import messages from './messages'
 import auth from './auth'
+import users from './users'
 
 // can be like 
 // leads: leads
@@ -15,5 +16,6 @@ export default combineReducers( {
     jobs,
     errors,
     messages,
-    auth
+    auth,
+    users
 })

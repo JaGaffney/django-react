@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getJobs, deleteJob } from "../../actions/jobs";
 
+import { getUsers } from "../../actions/users";
+
 import Animation from '../animations/Animation'
 import animationData from '../animations/bin.json'
 
@@ -18,11 +20,14 @@ export class Jobs extends Component {
   static propTypes = {
     jobs: PropTypes.array.isRequired,
     getJobs: PropTypes.func.isRequired,
-    deleteJob: PropTypes.func.isRequired
+    deleteJob: PropTypes.func.isRequired,
+    getUsers: PropTypes.func.isRequired
   }
 
   componentDidMount() {
     this.props.getJobs()
+    this.props.getUsers()
+    console.log(this.props)
   }
 
   // Single page component handlering
@@ -50,6 +55,17 @@ export class Jobs extends Component {
     this.setState({
       isStopped: true
     })
+  }
+
+  // returns the username of whoever created the Job
+  getOwnerName(ID){
+    let username = ID
+    for (let item in this.props.users){
+      if (ID === this.props.users[item]["id"]) {
+        username = this.props.users[item]["username"]
+        return username
+      }
+    }
   }
 
   render() {
@@ -85,7 +101,7 @@ export class Jobs extends Component {
                 <td onClick={this.loadSingleJob.bind(this, job)}>{job.job_name}</td>
                 <td onClick={this.loadSingleJob.bind(this, job)}>{job.job_type}</td>
                 <td onClick={this.loadSingleJob.bind(this, job)}>{job.client_business_name}</td>
-                <td onClick={this.loadSingleJob.bind(this, job)}>{job.owner}</td>
+                <td onClick={this.loadSingleJob.bind(this, job)}>{this.getOwnerName(job.owner)}</td>
                 <td onClick={this.loadSingleJob.bind(this, job)}>{job.start_date.slice(0, -10)}</td>
                 <td onClick={this.loadSingleJob.bind(this, job)}>{job.end_date.slice(0, -10)}</td>
                 <td onClick={this.loadSingleJob.bind(this, job)}>${job.cost}</td>
@@ -113,7 +129,9 @@ export class Jobs extends Component {
 }
 
 const mapStateToProps = state => ({
-  jobs: state.jobs.jobs
+  jobs: state.jobs.jobs,
+  users: state.users.users
+
 })
 
-export default connect(mapStateToProps, { getJobs, deleteJob })(Jobs);
+export default connect(mapStateToProps, { getJobs, deleteJob, getUsers })(Jobs);
