@@ -58,7 +58,6 @@ export class Employees extends Component {
 
 const mapStateToProps = state => ({
   users: state.users.users
-
 })
 
 export default connect(mapStateToProps, { getUsers })(Employees);

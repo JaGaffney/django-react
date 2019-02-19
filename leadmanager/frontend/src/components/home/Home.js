@@ -10,6 +10,7 @@ export class Home extends Component {
           <Card titleName={"Jobs"} description={"Displays all Jobs avaiable"} />
           <Card titleName={"Leads"} description={"Displays all of the current Leads"} />
           <Card titleName={"Employees"} description={"Displays employee contact details (soon)"} />
+          <Card titleName={"Schedule"} description={"Schedule Manager"} />
 
       </>
     )

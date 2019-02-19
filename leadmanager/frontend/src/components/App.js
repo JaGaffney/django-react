@@ -24,10 +24,10 @@ import JobDashboard from './jobs/JobsDashboard'
 import Employees from './employees/Employees'
 import Login from './accounts/Login'
 import Register from './accounts/Register'
+import Scheduler from './scheduler/Scheduler'
 
 // other
 import PrivateRoute from "./common/PrivateRoute"
-
 
 // Redux store
 import { Provider } from 'react-redux'
@@ -54,6 +54,7 @@ class App extends Component {
                             <PrivateRoute exact path="/leads" component={LeadDashboard} />
                             <PrivateRoute exact path="/jobs" component={JobDashboard} />
                             <PrivateRoute exact path="/employees" component={Employees} />
+                            <PrivateRoute exact path="/schedule" component={Scheduler} />
                             <Route exact path="/login" component={Login} />
                             <Route exact path="/register" component={Register} />
                         </Switch>

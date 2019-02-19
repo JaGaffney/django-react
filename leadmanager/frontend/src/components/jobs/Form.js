@@ -43,11 +43,14 @@ export class Form extends Component {
     // data validation
     // default time values
     if (start_date === "") {
-      start_date = "0001-01-01T00:00"
+      start_date = "0001-01-01"
     }
     if (end_date === "") {
-      end_date = "0001-01-01T00:00"
+      end_date = "0001-01-01"
     }
+    // date needs to be in datetime field but users dont need to not add it in as for now time is always full day
+    start_date = start_date + 'T00:00'
+    end_date = end_date + 'T00:00'
 
     if (job_name === "" || job_type === "" || client_business_name === "" || client_contact_name === "" || client_contact_email === "" || cost === ""){
       validData = false

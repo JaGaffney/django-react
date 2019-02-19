@@ -27,7 +27,6 @@ export class Jobs extends Component {
   componentDidMount() {
     this.props.getJobs()
     this.props.getUsers()
-    console.log(this.props)
   }
 
   // Single page component handlering

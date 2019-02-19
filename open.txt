@@ -1,1 +1,6 @@
 cd ../../programming/python/web_dev/django/django-react
+pipenv shell
+
+
+NOTES:
+https://trello.com/b/YU87PGDL/crm-website
