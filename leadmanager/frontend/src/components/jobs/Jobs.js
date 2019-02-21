@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { getJobs, deleteJob } from "../../actions/jobs";
+import { getJobs, getAllJobs, deleteJob } from "../../actions/jobs";
 
 import { getUsers } from "../../actions/users";
 
@@ -20,12 +20,14 @@ export class Jobs extends Component {
   static propTypes = {
     jobs: PropTypes.array.isRequired,
     getJobs: PropTypes.func.isRequired,
+    getAllJobs: PropTypes.func.isRequired,
     deleteJob: PropTypes.func.isRequired,
     getUsers: PropTypes.func.isRequired
   }
 
   componentDidMount() {
     this.props.getJobs()
+    this.props.getAllJobs()
     this.props.getUsers()
   }
 
@@ -133,4 +135,4 @@ const mapStateToProps = state => ({
 
 })
 
-export default connect(mapStateToProps, { getJobs, deleteJob, getUsers })(Jobs);
+export default connect(mapStateToProps, { getJobs, getAllJobs, deleteJob, getUsers })(Jobs);

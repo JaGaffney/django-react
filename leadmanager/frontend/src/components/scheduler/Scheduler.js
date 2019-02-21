@@ -18,7 +18,8 @@ export class Scheduler extends Component {
   }
 
   componentWillMount() {
-    this.props.getJobs()  
+    this.setState({jobList: []})
+    this.props.getJobs() 
   }
 
   // converts jobs from API to calander readable format
@@ -45,6 +46,7 @@ export class Scheduler extends Component {
       jobList: eventList
     })
   }
+
 
 // need to have the states load pre render but after the data has been loaded
   render() {

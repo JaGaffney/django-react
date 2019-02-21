@@ -2,7 +2,7 @@ from jobs.models import Jobs
 from rest_framework import viewsets, permissions
 from .serializers import JobsSerializer
 
-# Lead Viewset
+# Job Viewset only shows single users jobs
 class JobsViewSet(viewsets.ModelViewSet):
     permission_classes = [
         permissions.IsAuthenticated,
@@ -14,3 +14,13 @@ class JobsViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+# shows all jobs for all users if authenticated
+class JobsViewSetAll(viewsets.ModelViewSet):
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
+
+    serializer_class = JobsSerializer
+
+    queryset = Jobs.objects.all()

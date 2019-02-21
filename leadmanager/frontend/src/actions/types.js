@@ -6,6 +6,7 @@ export const CLEAR_LEADS = 'CLEAR_LEADS';
 
 // Jobs data
 export const GET_JOBS = "GET_JOBS";
+export const GET_ALL_JOBS = "GET_ALL_JOBS";
 export const DELETE_JOB = "DELETE_JOB";
 export const ADD_JOB = "ADD_JOB";
 
