@@ -61,6 +61,16 @@ export class Login extends Component {
                         </button>
                         </div>
                         <p>Don't have an account? <Link to="/register"> Register </Link></p>
+                        <br></br>
+                        <div className="container bg-secondary">
+                            <br></br>
+                            <h5>NOTE:</h5>
+                            <p>You can use the following info:</p> 
+                                <p><strong>Username:</strong> admin </p>
+                                <p><strong>Password:</strong> test </p>
+                            <p>(This will allow you to have a look at the website while it's still in development, however all data is wiped regularly so feel free to create whatever you want.)</p>
+                            <br></br>
+                        </div>
                     </form>
                 </div>
             </div>

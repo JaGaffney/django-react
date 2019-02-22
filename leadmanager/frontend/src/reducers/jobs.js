@@ -1,7 +1,8 @@
 import { GET_JOBS, GET_ALL_JOBS, DELETE_JOB, ADD_JOB  } from '../actions/types.js'
 
 const initialState = {
-    jobs: []
+    jobs: [],
+    allJobs: []
 }
 
 export default function(state = initialState, action) {
@@ -15,17 +16,20 @@ export default function(state = initialState, action) {
         case GET_ALL_JOBS:
             return {
                 ...state,
-                jobs: action.payload
+                allJobs: action.payload
             }
         case DELETE_JOB:
             return {
                 ...state,
-                jobs: state.jobs.filter(job => job.id !== action.payload)
+                jobs: state.jobs.filter(job => job.id !== action.payload),
+                allJobs: state.allJobs.filter(job => job.id !== action.payload)
+
             }
         case ADD_JOB:
             return {
                 ...state,
-                jobs: [...state.jobs, action.payload]
+                jobs: [...state.jobs, action.payload],
+                allJobs: [...state.allJobs, action.payload]
             }
         default:
             return state

@@ -40,7 +40,6 @@ export class Register extends Component {
             return <Redirect to="/" />
         }
 
-        
         const { username, email, password, password2 } = this.state
 
         return (
