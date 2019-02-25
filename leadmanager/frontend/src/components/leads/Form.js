@@ -11,6 +11,7 @@ export class Form extends Component {
     name: '',
     email: '',
     message: '',
+    active_lead: false,
     isStopped: true
   }
 
@@ -18,12 +19,16 @@ export class Form extends Component {
     addLead: PropTypes.func.isRequired
   }
 
+  // non checkbox elements of the form
   onChange = e => this.setState({ [e.target.name]: e.target.value })
+
+  // check box handlering
+  onChangeCheck = e => this.setState({ active_lead: e.target.checked })
 
   onSubmit = e => {
     e.preventDefault()
-    const { name, email, message } = this.state
-    const lead = { name, email, message }
+    const { name, email, message, active_lead } = this.state
+    const lead = { name, email, message, active_lead }
 
     // basic data validation, mostly on backend only for react
     let validData = true
@@ -35,7 +40,8 @@ export class Form extends Component {
     this.setState({
       name: "",
       email: "",
-      message: ""
+      message: "",
+      active_lead: false
     })
 
     // if the data was processed correctly then the animation logo will start
@@ -83,6 +89,15 @@ export class Form extends Component {
               name="message"
               onChange={this.onChange}
               value={message}
+            />
+          </div>
+          <div className="form-group">
+            <label>Active lead</label>
+            <input
+              className="form-control"
+              type="checkbox"
+              name="active_lead"
+              onChange={this.onChangeCheck}
             />
           </div>
           <div className="form-group">

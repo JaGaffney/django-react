@@ -1,7 +1,10 @@
-from rest_framework import routers
-from .api import LeadViewSet
+from django.urls import path, include
 
-router = routers.DefaultRouter()
-router.register('api/leads', LeadViewSet, 'leads')
+from leads import views
 
-urlpatterns = router.urls
+urlpatterns = [
+    path('api/leads/', views.LeadList.as_view()),
+    path('api/leads/<int:pk>/', views.LeadDetail.as_view()),
+    path('api/allleads/', views.LeadViewSetAll.as_view()),
+]
+

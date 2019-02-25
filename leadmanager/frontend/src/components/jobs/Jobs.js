@@ -33,7 +33,7 @@ export class Jobs extends Component {
   }
 
   // Single page component handlering
-  loadSingleJob(job) {
+  loadSingleJob = (job) => {
     this.setState({
       loadSingle: true,
       jobData: job

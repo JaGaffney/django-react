@@ -34,13 +34,17 @@ export class Leads extends Component {
     })
   }
 
+  // getLeadActvity(activity){
+
+  // }
+
   render() {
     // loads the lottie animation
     let animationItem = <Animation animationItemData={animationData} stopped={this.state.isStopped} isLoop={false} />
 
     return (
       <>
-        <h2>Leads</h2>
+        <h2>Active Leads</h2>
         <table className="table table-striped">
           <thead>
             <tr>
@@ -48,6 +52,7 @@ export class Leads extends Component {
               <th>Name</th>
               <th>Email</th>
               <th>Message</th>
+              <th>Active</th>
               <th></th>
             </tr>
           </thead>
@@ -58,6 +63,46 @@ export class Leads extends Component {
                 <td>{lead.name}</td>
                 <td>{lead.email}</td>
                 <td>{lead.message}</td>
+                <td>{lead.active_lead.toString()}</td>
+                <td>
+                 <div style={{ width: '3rem' }}>
+                    <button 
+                      onClick={this.props.deleteLead.bind(this, lead.id)} 
+                      className="btn btn-danger btn-sm"
+                      onMouseEnter={this.onDeleteHover.bind(this)}
+                      onMouseLeave={this.onDeleteLeave.bind(this)}
+                    >
+                      {animationItem}
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            )) }
+          </tbody>
+        </table>
+
+        <br></br>
+
+        <h2>All Leads</h2>
+        <table className="table table-striped">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Message</th>
+              <th>Active</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            { this.props.leads.map(lead => (
+              <tr key={lead.id}>
+                <td>{lead.id}</td>
+                <td>{lead.name}</td>
+                <td>{lead.email}</td>
+                <td>{lead.message}</td>
+                <td>{lead.active_lead.toString()}</td>
                 <td>
                  <div style={{ width: '3rem' }}>
                     <button 
