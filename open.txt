@@ -4,3 +4,7 @@ pipenv shell
 
 NOTES:
 https://trello.com/b/YU87PGDL/crm-website
+
+Scheduler code examples:
+http://intljusticemission.github.io/react-big-calendar/examples/index.html
+https://reactjsexample.com/a-scheduler-and-resource-planning-component-built-for-react/

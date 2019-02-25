@@ -5,9 +5,10 @@ const initialState = {
     allJobs: []
 }
 
+// can prob convert GET_ALL_JOBS to GET_JOBS
 export default function(state = initialState, action) {
     // common convetion is to use a switch with cases
-    switch(action.type) {
+    switch (action.type) {
         case GET_JOBS:
             return {
                 ...state,
@@ -23,7 +24,6 @@ export default function(state = initialState, action) {
                 ...state,
                 jobs: state.jobs.filter(job => job.id !== action.payload),
                 allJobs: state.allJobs.filter(job => job.id !== action.payload)
-
             }
         case ADD_JOB:
             return {
