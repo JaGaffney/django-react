@@ -28,7 +28,7 @@ export class Form extends Component {
   onSubmit = e => {
     e.preventDefault()
     const { name, email, message, active_lead } = this.state
-    const lead = { name, email, message, active_lead }
+    const lead = { name, email, message, active_lead, owner: this.props.auth }
 
     // basic data validation, mostly on backend only for react
     let validData = true
@@ -116,5 +116,8 @@ export class Form extends Component {
 }
 
 
+const mapStateToProps = state => ({
+  auth: state.auth.user.id
+})
 
-export default connect(null, { addLead })(Form)
+export default connect(mapStateToProps, { addLead })(Form)

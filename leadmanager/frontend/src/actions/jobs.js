@@ -17,7 +17,7 @@ export const getJobs = () => (dispatch, getState) => {
         .catch(err => dispatch(returnError(err.response.data, err.response.status)));
 }
 
-export const getAllJobs= () => (dispatch, getState) => {
+export const getAllJobs = () => (dispatch, getState) => {
     axios
         .get("/api/alljobs/", tokenConfig(getState))
         .then(res => {

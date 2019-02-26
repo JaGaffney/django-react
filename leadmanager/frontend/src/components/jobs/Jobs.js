@@ -61,14 +61,14 @@ export class Jobs extends Component {
 
   // returns the username of whoever created the Job
   getOwnerName(ID){
-    let username = ID
     for (let item in this.props.users){
       if (ID === this.props.users[item]["id"]) {
-        username = this.props.users[item]["username"]
-        return username
+        return this.props.users[item]["username"]
       }
     }
+    return "N/A"
   }
+ 
 
   onDeleteHandler(id){
     this.props.deleteJob(id)

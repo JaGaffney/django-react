@@ -1,8 +1,9 @@
 // Leads data
 export const GET_LEADS = "GET_LEADS";
+export const GET_ALL_LEADS = 'GET_ALL_LEADS';
 export const DELETE_LEAD = "DELETE_LEAD";
 export const ADD_LEAD = "ADD_LEAD";
-export const CLEAR_LEADS = 'CLEAR_LEADS';
+export const CLEAR_LEADS = "CLEAR_LEADS";
 
 // Jobs data
 export const GET_JOBS = "GET_JOBS";

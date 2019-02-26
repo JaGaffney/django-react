@@ -1,26 +1,30 @@
-from jobs.models import Jobs
-from rest_framework import viewsets, permissions
-from .serializers import JobsSerializer
+# NOTE
+# disabled just so I can remeber the other way of creating APIs
+# END NOTE
 
-# Job Viewset only shows single users jobs
-class JobsViewSet(viewsets.ModelViewSet):
-    permission_classes = [
-        permissions.IsAuthenticated,
-    ]
-    serializer_class = JobsSerializer
+# from jobs.models import Jobs
+# from rest_framework import viewsets, permissions
+# from .serializers import JobsSerializer
 
-    def get_queryset(self):
-        return self.request.user.jobs.all()
+# # Job Viewset only shows single users jobs
+# class JobsViewSet(viewsets.ModelViewSet):
+#     permission_classes = [
+#         permissions.IsAuthenticated,
+#     ]
+#     serializer_class = JobsSerializer
 
-    def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
+#     def get_queryset(self):
+#         return self.request.user.jobs.all()
 
-# shows all jobs for all users if authenticated
-class JobsViewSetAll(viewsets.ModelViewSet):
-    permission_classes = [
-        permissions.IsAuthenticated,
-    ]
+#     def perform_create(self, serializer):
+#         serializer.save(owner=self.request.user)
 
-    serializer_class = JobsSerializer
+# # shows all jobs for all users if authenticated
+# class JobsViewSetAll(viewsets.ModelViewSet):
+#     permission_classes = [
+#         permissions.IsAuthenticated,
+#     ]
 
-    queryset = Jobs.objects.all()
+#     serializer_class = JobsSerializer
+
+#     queryset = Jobs.objects.all()

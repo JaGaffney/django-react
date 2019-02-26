@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { getLeads, deleteLead } from "../../actions/leads";
+import { getLeads, deleteLead, getAllLeads } from "../../actions/leads";
+
+import { getUsers } from "../../actions/users";
 
 import Animation from '../animations/Animation'
 import animationData from '../animations/bin.json'
@@ -13,13 +15,18 @@ export class Leads extends Component {
 
   static propTypes = {
     leads: PropTypes.array.isRequired,
+    allLeads: PropTypes.array.isRequired,
     getLeads: PropTypes.func.isRequired,
-    deleteLead: PropTypes.func.isRequired
+    getAllLeads: PropTypes.func.isRequired,
+    deleteLead: PropTypes.func.isRequired,
+    getUsers: PropTypes.func.isRequired
   }
 
   // onload gets all of the leads data from the api
   componentDidMount() {
-    this.props.getLeads();
+    this.props.getLeads()
+    this.props.getAllLeads()
+    this.props.getUsers()
   }
 
   onDeleteHover(){
@@ -34,9 +41,15 @@ export class Leads extends Component {
     })
   }
 
-  // getLeadActvity(activity){
-
-  // }
+  // returns the username of whoever created the Job
+  getOwnerName(ID){
+    for (let item in this.props.users){
+      if (ID === this.props.users[item]["id"]) {
+        return this.props.users[item]["username"]
+      }
+    }
+    return "N/A"
+  }
 
   render() {
     // loads the lottie animation
@@ -44,7 +57,7 @@ export class Leads extends Component {
 
     return (
       <>
-        <h2>Active Leads</h2>
+        <h2>My Leads</h2>
         <table className="table table-striped">
           <thead>
             <tr>
@@ -65,7 +78,7 @@ export class Leads extends Component {
                 <td>{lead.message}</td>
                 <td>{lead.active_lead.toString()}</td>
                 <td>
-                 <div style={{ width: '3rem' }}>
+                <div style={{ width: '3rem' }}>
                     <button 
                       onClick={this.props.deleteLead.bind(this, lead.id)} 
                       className="btn btn-danger btn-sm"
@@ -76,8 +89,9 @@ export class Leads extends Component {
                     </button>
                   </div>
                 </td>
-              </tr>
-            )) }
+              </tr> 
+             )) 
+            }
           </tbody>
         </table>
 
@@ -91,17 +105,19 @@ export class Leads extends Component {
               <th>Name</th>
               <th>Email</th>
               <th>Message</th>
+              <th>Lead creator</th>
               <th>Active</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
-            { this.props.leads.map(lead => (
+            { this.props.allLeads.map(lead => (
               <tr key={lead.id}>
                 <td>{lead.id}</td>
                 <td>{lead.name}</td>
                 <td>{lead.email}</td>
                 <td>{lead.message}</td>
+                <td>{this.getOwnerName(lead.owner)}</td>
                 <td>{lead.active_lead.toString()}</td>
                 <td>
                  <div style={{ width: '3rem' }}>
@@ -126,10 +142,9 @@ export class Leads extends Component {
 }
 
 const mapStateToProps = state => ({
-  leads: state.leads.leads
+  leads: state.leads.leads,
+  allLeads: state.leads.allLeads,
+  users: state.users.users
 })
 
-export default connect(
-  mapStateToProps,
-  { getLeads, deleteLead }
-)(Leads);
+export default connect(mapStateToProps,{ getLeads, deleteLead, getAllLeads, getUsers })(Leads);
