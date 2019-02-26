@@ -38,7 +38,7 @@ export class Dashboard extends Component {
       <br></br>       
       <div className="container h-100">
           <div className="row h-100 justify-content-end align-items-right">
-            <button className="btn btn-primary" onClick={this.onActivityHandler.bind(this)}>{this.state.loadActivity ? 'Hide' : 'Show'} Active</button>
+            <button className="btn btn-primary" onClick={this.onActivityHandler.bind(this)}>{this.state.loadActivity ? 'All' : 'Active'} Leads</button>
           </div>
       </div>
 

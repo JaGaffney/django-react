@@ -51,53 +51,37 @@ export class Leads extends Component {
     return "N/A"
   }
 
-  render() {
-    // loads the lottie animation
-    let animationItem = <Animation animationItemData={animationData} stopped={this.state.isStopped} isLoop={false} />
+  // Creates the rows for the lead table due to being duplicate code, easier to have it as a function
+  createLeadTableRows(lead){
+    return (
+      <tr key={lead.id}>
+        <td>{lead.id}</td>
+        <td>{lead.name}</td>
+        <td>{lead.email}</td>
+        <td>{lead.message}</td>
+        <td>{this.getOwnerName(lead.owner)}</td>
+        <td>{lead.active_lead.toString()}</td>
+        <td>
+          <div style={{ width: '3rem' }}>
+            <button 
+              onClick={this.props.deleteLead.bind(this, lead.id)} 
+              className="btn btn-danger btn-sm"
+              onMouseEnter={this.onDeleteHover.bind(this)}
+              onMouseLeave={this.onDeleteLeave.bind(this)}
+            >
+              <Animation animationItemData={animationData} stopped={this.state.isStopped} isLoop={false} />
+            </button>
+          </div>
+        </td>
+      </tr>
+    )
+  }
 
+  // Lead table generation
+  createLeadTable(name, leads){
     return (
       <>
-        <h2>My Leads</h2>
-        <table className="table table-striped">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Message</th>
-              <th>Active</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            { this.props.leads.map(lead => (
-              <tr key={lead.id}>
-                <td>{lead.id}</td>
-                <td>{lead.name}</td>
-                <td>{lead.email}</td>
-                <td>{lead.message}</td>
-                <td>{lead.active_lead.toString()}</td>
-                <td>
-                <div style={{ width: '3rem' }}>
-                    <button 
-                      onClick={this.props.deleteLead.bind(this, lead.id)} 
-                      className="btn btn-danger btn-sm"
-                      onMouseEnter={this.onDeleteHover.bind(this)}
-                      onMouseLeave={this.onDeleteLeave.bind(this)}
-                    >
-                      {animationItem}
-                    </button>
-                  </div>
-                </td>
-              </tr> 
-             )) 
-            }
-          </tbody>
-        </table>
-
-        <br></br>
-
-        <h2>All Leads</h2>
+        <h2>{name}</h2>
         <table className="table table-striped">
           <thead>
             <tr>
@@ -111,31 +95,32 @@ export class Leads extends Component {
             </tr>
           </thead>
           <tbody>
-            { this.props.allLeads.map(lead => (
-              <tr key={lead.id}>
-                <td>{lead.id}</td>
-                <td>{lead.name}</td>
-                <td>{lead.email}</td>
-                <td>{lead.message}</td>
-                <td>{this.getOwnerName(lead.owner)}</td>
-                <td>{lead.active_lead.toString()}</td>
-                <td>
-                 <div style={{ width: '3rem' }}>
-                    <button 
-                      onClick={this.props.deleteLead.bind(this, lead.id)} 
-                      className="btn btn-danger btn-sm"
-                      onMouseEnter={this.onDeleteHover.bind(this)}
-                      onMouseLeave={this.onDeleteLeave.bind(this)}
-                    >
-                      {animationItem}
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            )) }
+            { leads.map(lead => {
+              if (this.props.loadActivity) {
+                if (lead.active_lead) {
+                  return (
+                    this.createLeadTableRows(lead)
+                  )
+                }
+              } else {
+                return (
+                  this.createLeadTableRows(lead)
+                )
+              }
+            }) 
+          }
           </tbody>
-        
         </table>
+      </>
+    )
+  }
+
+  render() {
+    return (
+      <>
+        {this.createLeadTable("My Leads", this.props.leads)}
+        <br></br>
+        {this.createLeadTable("All Leads", this.props.allLeads)}
       </>
     )
   }
