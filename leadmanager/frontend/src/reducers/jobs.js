@@ -1,9 +1,22 @@
-import { GET_JOBS, GET_ALL_JOBS, DELETE_JOB, ADD_JOB  } from '../actions/types.js'
+import { GET_JOBS, GET_ALL_JOBS, DELETE_JOB, ADD_JOB, UPDATE_JOB  } from '../actions/types.js'
 
 const initialState = {
     jobs: [],
     allJobs: []
 }
+
+// probally not a good way of updating the state value but i couldnt work out a better way
+function updateStateInfo(stateArray, action) {
+  let updatedJobs = []
+  stateArray.filter(job => {
+    if (job.id === action.payload.id) {
+      updatedJobs = [...updatedJobs, action.payload]
+    } else {
+      updatedJobs = [...updatedJobs, job]
+    }
+  })
+  return updatedJobs
+  }
 
 // can prob convert GET_ALL_JOBS to GET_JOBS
 export default function(state = initialState, action) {
@@ -31,6 +44,14 @@ export default function(state = initialState, action) {
                 jobs: [...state.jobs, action.payload],
                 allJobs: [...state.allJobs, action.payload]
             }
+        case UPDATE_JOB:
+
+
+          return {
+            ...state,
+            jobs: updateStateInfo(state.jobs, action),
+            allJobs: updateStateInfo(state.allJobs, action)
+          }
         default:
             return state
     }

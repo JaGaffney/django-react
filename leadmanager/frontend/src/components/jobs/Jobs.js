@@ -41,6 +41,7 @@ export class Jobs extends Component {
   }
 
   onJobsPageHandler(){
+    console.log("got here")
     this.setState({
       loadSingle: false
     })
@@ -69,7 +70,6 @@ export class Jobs extends Component {
     return "N/A"
   }
  
-
   onDeleteHandler(id){
     this.props.deleteJob(id)
     this.props.deleteJobFromAll(id)
@@ -131,12 +131,14 @@ export class Jobs extends Component {
     // loads the single web page when the state has changed from a click which passes in data from w/e table location it was in
     let singleJobWebPage
     if (this.state.loadSingle){
+      // updates table information with the new data from the db
       singleJobWebPage = <JobsSingle jobInfo={this.state.jobData} JobsPageHandler={this.onJobsPageHandler.bind(this)}/>
-    }
+    } 
 
     return (
       <>
         {this.createJobTable("My Jobs", this.props.jobs)}
+        <br></br>
         {this.createJobTable("All Jobs", this.props.allJobs)}
         {singleJobWebPage}
       </>

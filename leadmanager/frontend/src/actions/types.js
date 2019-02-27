@@ -10,6 +10,7 @@ export const GET_JOBS = "GET_JOBS";
 export const GET_ALL_JOBS = "GET_ALL_JOBS";
 export const DELETE_JOB = "DELETE_JOB";
 export const ADD_JOB = "ADD_JOB";
+export const UPDATE_JOB = "UPDATE_JOB";
 
 // Alert messages instead of console.log
 export const GET_ERRORS = "GET_ERRORS";

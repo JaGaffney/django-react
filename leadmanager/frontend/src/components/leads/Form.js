@@ -92,7 +92,7 @@ export class Form extends Component {
             />
           </div>
           <div className="form-group">
-            <label>Active lead</label>
+            <label>Create as active lead</label>
             <input
               className="form-control"
               type="checkbox"

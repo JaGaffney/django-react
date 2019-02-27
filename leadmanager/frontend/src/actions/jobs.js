@@ -2,7 +2,7 @@ import axios from "axios";
 import { createMessage, returnError } from './messages'
 import { tokenConfig } from './auth'
 
-import { GET_JOBS, GET_ALL_JOBS, DELETE_JOB, ADD_JOB } from "./types";
+import { GET_JOBS, GET_ALL_JOBS, DELETE_JOB, ADD_JOB, UPDATE_JOB } from "./types";
 
 // GET Jobs
 export const getJobs = () => (dispatch, getState) => {
@@ -68,4 +68,18 @@ export const addJob = (job) => (dispatch, getState) => {
             })
         })
         .catch(err => dispatch(returnError(err.response.data, err.response.status)))
+}
+
+// Update Job
+export const updateJob = (id, job) => (dispatch, getState) => {
+    axios
+        .put(`/api/jobs/${id}/`, job, tokenConfig(getState))
+        .then(res => {
+            dispatch(createMessage({ addJob: 'Job Updated' }))
+            dispatch({
+            type: UPDATE_JOB,
+            payload: job 
+            })
+        })
+        .catch(err => console.log(err));
 }
