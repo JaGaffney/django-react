@@ -84,9 +84,10 @@ export class JobsSingle extends Component {
     if (end_date === "") {
       end_date = "0001-01-01"
     }
+
     // date needs to be in datetime field but users dont need to not add it in as for now time is always full day
-    start_date = start_date + 'T00:00'
-    end_date = end_date + 'T00:00'
+    start_date = start_date + 'T00:00:00Z'
+    end_date = end_date + 'T00:00:00Z'
 
     // creates a valid object that can be sent to the API
     const job = { id: this.props.jobInfo.id, created_at: this.props.jobInfo.created_at, job_name, job_type, client_business_name, client_contact_name, client_contact_email, message, owner, start_date, end_date, cost }
@@ -107,9 +108,8 @@ export class JobsSingle extends Component {
       editColor: this.state.editColorPrimary
     })
 
-    // closes down the form
-    // NOTE not working
-    this.props.JobsPageHandler
+    // closes down the form, ensures data that might not have made it to the server isnt overrwitten by closing down on change.
+    this.props.JobsPageHandler()
   }
 
   render() {

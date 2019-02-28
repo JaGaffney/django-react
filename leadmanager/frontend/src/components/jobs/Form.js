@@ -49,8 +49,8 @@ export class Form extends Component {
       end_date = "0001-01-01"
     }
     // date needs to be in datetime field but users dont need to not add it in as for now time is always full day
-    start_date = start_date + 'T00:00'
-    end_date = end_date + 'T00:00'
+    start_date = start_date + 'T00:00:00Z'
+    end_date = end_date + 'T00:00:00Z'
 
     if (job_name === "" || job_type === "" || client_business_name === "" || client_contact_name === "" || client_contact_email === "" || cost === ""){
       validData = false
@@ -59,7 +59,7 @@ export class Form extends Component {
     // creates a valid object that can be sent to the API
     const job = { job_name, job_type, client_business_name, client_contact_name, client_contact_email, message, owner, start_date, end_date, cost }
     this.props.addJob(job)
-    
+
     // resetting data back to default values
     this.setState({
         job_name: '',

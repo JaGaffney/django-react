@@ -33,6 +33,7 @@ export default function(state = initialState, action) {
                 allJobs: action.payload
             }
         case DELETE_JOB:
+            // can use .filter here due to removing the payload with the id that has been deleted
             return {
                 ...state,
                 jobs: state.jobs.filter(job => job.id !== action.payload),
@@ -45,8 +46,7 @@ export default function(state = initialState, action) {
                 allJobs: [...state.allJobs, action.payload]
             }
         case UPDATE_JOB:
-
-
+        // probally not a good way of updating the state value but i couldnt work out a better way
           return {
             ...state,
             jobs: updateStateInfo(state.jobs, action),

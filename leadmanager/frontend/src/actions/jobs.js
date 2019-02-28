@@ -43,19 +43,6 @@ export const deleteJob = id => (dispatch, getState) => {
         .catch(err => console.log(err));
 }
 
-export const deleteJobFromAll = id => (dispatch, getState) => {
-    axios
-        .delete(`/api/alljobs/${id}/`, tokenConfig(getState))
-        .then(res => {
-            dispatch(createMessage({ deleteJobFromAll: 'Job Deleted' }))
-            dispatch({
-            type: DELETE_JOB,
-            payload: id
-            })
-        })
-        .catch(err => console.log(err));
-}
-
 // Add Job
 export const addJob = (job) => (dispatch, getState) => {
     axios

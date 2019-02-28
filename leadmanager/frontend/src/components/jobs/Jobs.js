@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { getJobs, getAllJobs, deleteJob, deleteJobFromAll } from "../../actions/jobs";
+import { getJobs, getAllJobs, deleteJob } from "../../actions/jobs";
 
 import { getUsers } from "../../actions/users";
 
@@ -40,8 +40,8 @@ export class Jobs extends Component {
     })
   }
 
-  onJobsPageHandler(){
-    console.log("got here")
+  // closes down the single page component
+  onJobsPageHandler = () => {
     this.setState({
       loadSingle: false
     })
@@ -72,7 +72,6 @@ export class Jobs extends Component {
  
   onDeleteHandler(id){
     this.props.deleteJob(id)
-    this.props.deleteJobFromAll(id)
   }
 
   // job table generation
@@ -132,7 +131,7 @@ export class Jobs extends Component {
     let singleJobWebPage
     if (this.state.loadSingle){
       // updates table information with the new data from the db
-      singleJobWebPage = <JobsSingle jobInfo={this.state.jobData} JobsPageHandler={this.onJobsPageHandler.bind(this)}/>
+      singleJobWebPage = <JobsSingle jobInfo={this.state.jobData} JobsPageHandler={this.onJobsPageHandler.bind(this)} CheckingState={this.state.loadSingle} />
     } 
 
     return (
@@ -152,4 +151,4 @@ const mapStateToProps = state => ({
   users: state.users.users
 })
 
-export default connect(mapStateToProps, { getJobs, getAllJobs, deleteJob, deleteJobFromAll, getUsers })(Jobs);
+export default connect(mapStateToProps, { getJobs, getAllJobs, deleteJob, getUsers })(Jobs);
