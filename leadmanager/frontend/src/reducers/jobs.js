@@ -6,7 +6,7 @@ const initialState = {
 }
 
 // probally not a good way of updating the state value but i couldnt work out a better way
-function updateStateInfo(stateArray, action) {
+ let updateStateInfo = (stateArray, action) => {
   let updatedJobs = []
   stateArray.filter(job => {
     if (job.id === action.payload.id) {

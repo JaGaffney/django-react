@@ -154,7 +154,7 @@ export class JobsSingle extends Component {
               <div className="card-header">Schedule (YYYY-MM-DD)</div>
                 <div className="card-body">
                     <p className="card-text">Created date: {this.props.jobInfo.created_at.slice(0, -17)}</p>
-                    <p className="card-text">Created by: {this.props.jobInfo.owner}</p>
+                    <p className="card-text">Created by: {this.props.OwnerName}</p>
                     <p className="card-text">Job Starts: {this.props.jobInfo.start_date.slice(0, -10)}</p>
                     <p className="card-text">Job Ends: {this.props.jobInfo.end_date.slice(0, -10)}</p>
                 </div>
@@ -282,7 +282,7 @@ export class JobsSingle extends Component {
                     className="form-control"
                     type="text"
                     readOnly={true}
-                    value={this.props.jobInfo.owner}
+                    value={this.props.OwnerName}
                   />
 
                 <label>Start Date:</label>

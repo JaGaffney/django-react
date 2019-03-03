@@ -1,8 +1,21 @@
-import { GET_LEADS, DELETE_LEAD, ADD_LEAD, GET_ALL_LEADS } from '../actions/types.js'
+import { GET_LEADS, DELETE_LEAD, ADD_LEAD, GET_ALL_LEADS, UPDATE_LEAD } from '../actions/types.js'
 
 const initialState = {
     leads: [],
     allLeads: []
+}
+
+// set job
+let updateStateInfo = (stateArray, action) => {
+  let updatedLead = []
+  stateArray.filter(lead => {
+    if (lead.id === action.payload.id) {
+      updatedLead = [...updatedLead, action.payload]
+    } else {
+      updatedLead = [...updatedLead, lead]
+    }
+  })
+  return updatedLead
 }
 
 export default function(state = initialState, action) {
@@ -30,6 +43,13 @@ export default function(state = initialState, action) {
                 leads: [...state.leads, action.payload],
                 allLeads: [...state.allLeads, action.payload]
             }
+        case UPDATE_LEAD:
+        // probally not a good way of updating the state value but i couldnt work out a better way
+          return {
+            ...state,
+            leads: updateStateInfo(state.leads, action),
+            allLeads: updateStateInfo(state.allLeads, action)
+          }
         default:
             return state
     }

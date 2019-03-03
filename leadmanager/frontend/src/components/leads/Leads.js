@@ -8,9 +8,13 @@ import { getUsers } from "../../actions/users";
 import Animation from '../animations/Animation'
 import animationData from '../animations/bin.json'
 
+import LeadsSingle from './LeadsSingle'
+
 export class Leads extends Component {
   state = {
-    isStopped: true
+    isStopped: true,
+    loadSingle: false,
+    leadData: ""
   }
 
   static propTypes = {
@@ -27,6 +31,22 @@ export class Leads extends Component {
     this.props.getLeads()
     this.props.getAllLeads()
     this.props.getUsers()
+  }
+
+  // Single page component handlering
+  loadSingleLead = (lead) => {
+    this.setState({
+      loadSingle: true,
+      leadData: lead,
+      ownerName: this.getOwnerName(lead.owner)
+    })
+  }
+  
+  // closes down the single page component
+  onLeadsPageHandler = () => {
+    this.setState({
+      loadSingle: false
+    })
   }
 
   onDeleteHover(){
@@ -54,13 +74,13 @@ export class Leads extends Component {
   // Creates the rows for the lead table due to being duplicate code, easier to have it as a function
   createLeadTableRows(lead){
     return (
-      <tr key={lead.id}>
-        <td>{lead.id}</td>
-        <td>{lead.name}</td>
-        <td>{lead.email}</td>
-        <td>{lead.message}</td>
-        <td>{this.getOwnerName(lead.owner)}</td>
-        <td>{lead.active_lead.toString()}</td>
+      <tr key={lead.id} style={{cursor: 'pointer'}}>
+        <td onClick={this.loadSingleLead.bind(this, lead)}>{lead.id}</td>
+        <td onClick={this.loadSingleLead.bind(this, lead)}>{lead.name}</td>
+        <td onClick={this.loadSingleLead.bind(this, lead)}>{lead.email}</td>
+        <td onClick={this.loadSingleLead.bind(this, lead)}>{lead.message}</td>
+        <td onClick={this.loadSingleLead.bind(this, lead)}>{this.getOwnerName(lead.owner)}</td>
+        <td onClick={this.loadSingleLead.bind(this, lead)}>{lead.active_lead.toString()}</td>
         <td>
           <div style={{ width: '3rem' }}>
             <button 
@@ -116,11 +136,25 @@ export class Leads extends Component {
   }
 
   render() {
+    // loads the single web page when the state has changed from a click which passes in data from w/e table location it was in
+    let singleLeadWebPage
+    if (this.state.loadSingle){
+      // updates table information with the new data from the db
+      singleLeadWebPage = <LeadsSingle
+                            leadInfo={this.state.leadData}
+                            LeadPageHandler={this.onLeadsPageHandler.bind(this)}
+                            CheckingState={this.state.loadSingle}
+                            OwnerName={this.state.ownerName} 
+                          />
+    } 
+
     return (
       <>
         {this.createLeadTable("My Leads", this.props.leads)}
         <br></br>
         {this.createLeadTable("All Leads", this.props.allLeads)}
+        <br></br>
+        {singleLeadWebPage}
       </>
     )
   }

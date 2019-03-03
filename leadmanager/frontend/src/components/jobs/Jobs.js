@@ -14,7 +14,8 @@ export class Jobs extends Component {
   state = {
     isStopped: true,
     loadSingle: false,
-    jobData: ""
+    jobData: "",
+    ownerName: ""
   }
 
   static propTypes = {
@@ -36,7 +37,8 @@ export class Jobs extends Component {
   loadSingleJob = (job) => {
     this.setState({
       loadSingle: true,
-      jobData: job
+      jobData: job,
+      ownerName: this.getOwnerName(job.owner)
     })
   }
 
@@ -96,7 +98,7 @@ export class Jobs extends Component {
         <tbody>
           { jobs.map(job => (
 
-            <tr key={job.id}  style={{cursor: 'pointer'}}>
+            <tr key={job.id} style={{cursor: 'pointer'}}>
               <td onClick={this.loadSingleJob.bind(this, job)}>{job.id}</td>
               <td onClick={this.loadSingleJob.bind(this, job)}>{job.job_name}</td>
               <td onClick={this.loadSingleJob.bind(this, job)}>{job.job_type}</td>
@@ -131,7 +133,12 @@ export class Jobs extends Component {
     let singleJobWebPage
     if (this.state.loadSingle){
       // updates table information with the new data from the db
-      singleJobWebPage = <JobsSingle jobInfo={this.state.jobData} JobsPageHandler={this.onJobsPageHandler.bind(this)} CheckingState={this.state.loadSingle} />
+      singleJobWebPage = <JobsSingle
+                            jobInfo={this.state.jobData}
+                            JobsPageHandler={this.onJobsPageHandler.bind(this)}
+                            CheckingState={this.state.loadSingle}
+                            OwnerName={this.state.ownerName} 
+                          />
     } 
 
     return (

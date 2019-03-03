@@ -2,7 +2,7 @@ import axios from "axios";
 import { createMessage, returnError } from './messages'
 import { tokenConfig } from './auth'
 
-import { GET_LEADS, GET_ALL_LEADS, DELETE_LEAD, ADD_LEAD } from "./types";
+import { GET_LEADS, GET_ALL_LEADS, DELETE_LEAD, ADD_LEAD, UPDATE_LEAD } from "./types";
 
 // GET LEADS
 export const getLeads = () => (dispatch, getState) => {
@@ -55,4 +55,19 @@ export const addLead = (lead) => (dispatch, getState) => {
             })
         })
         .catch(err => dispatch(returnError(err.response.data, err.response.status)))
+}
+
+
+// Update Job
+export const updateLead = (id, lead) => (dispatch, getState) => {
+    axios
+        .put(`/api/leads/${id}/`, lead, tokenConfig(getState))
+        .then(res => {
+            dispatch(createMessage({ addLead: 'Lead Updated' }))
+            dispatch({
+            type: UPDATE_LEAD,
+            payload: lead 
+            })
+        })
+        .catch(err => console.log(err));
 }
