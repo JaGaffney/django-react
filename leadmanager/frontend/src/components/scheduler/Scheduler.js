@@ -4,12 +4,15 @@ import PropTypes from "prop-types";
 
 import Calender from './Calender'
 
+import Animation from '../animations/Animation'
+import animationData from '../animations/spinner.json'
+
 import { getJobs } from "../../actions/jobs";
 
-// NOTE: TODO eventCreator should be called on load rather than from an onClick button
 export class Scheduler extends Component {
   state = {
-    jobList: []
+    jobList: [],
+    isLoading: true
   }
 
   static propTypes = {
@@ -17,9 +20,12 @@ export class Scheduler extends Component {
     getJobs: PropTypes.func.isRequired
   }
 
-  componentWillMount() {
-    this.setState({jobList: []})
+  componentDidMount() {
+    this.setState({ jobList: [] })
     this.props.getJobs() 
+
+    // loads the eventCreator after a set ammount of time
+    setTimeout(() => this.eventCreator(), 2000)
   }
 
   // converts jobs from API to calander readable format
@@ -43,24 +49,38 @@ export class Scheduler extends Component {
 
     // sets the states
     this.setState({
-      jobList: eventList
+      jobList: eventList,
+      isLoading: false
     })
   }
 
-
-// need to have the states load pre render but after the data has been loaded
   render() {
+    // either will have a spinner or have the schduler
+    let scheduler
+    if (this.state.isLoading){
+      scheduler = (
+        <div className="container h-30" style={{ height: '5rem', width: '5rem' }}>
+          <div className="row h-100 justify-content-center align-items-center">
+            <Animation animationItemData={animationData} stopped={false} isLoop={true} name={'spinner'} />
+          </div>
+        </div>
+      )
+    } else {
+      scheduler = (
+        <div style={{ height: '60rem' }}>
+          <div className="container" style={{ height: '50rem' }}>
+                <h1>Schedule Manager</h1>
+                <br></br>
+                <Calender eventList={this.state.jobList} />
+          </div>
+        </div>
+      )
+    }
 
     return (
-      <div style={{ height: '60rem' }}>
-        <div className="container" style={{ height: '50rem' }}>
-              <h1>Schedule Manager</h1>
-              <button className ="btn btn-primary" onClick={this.eventCreator}>Refresh(temp)</button> 
-              <br></br>
-              <br></br>
-              <Calender eventList={this.state.jobList} />
-        </div>
-      </div>
+      <>
+        {scheduler}
+      </>
     )
   }
 }

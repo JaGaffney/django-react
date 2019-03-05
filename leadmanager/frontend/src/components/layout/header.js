@@ -18,7 +18,7 @@ export class Header extends Component {
 
     const authLinks = (
         <>
-            <span className="navbar-text mr-3"><strong>{ user ? `Logged in as ${user.username}:` : '' }</strong></span>
+            <span className="navbar-text mr-3"><strong>{ user ? `Logged in as: ${user.username}` : '' }</strong></span>
             <li className="nav-item">
                 {'  '}
             </li>

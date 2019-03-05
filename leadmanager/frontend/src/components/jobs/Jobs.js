@@ -50,16 +50,26 @@ export class Jobs extends Component {
   }
 
   // animation button hovering effects
-  onDeleteHover(){
+  onDeleteHover(job, name){
+    let jobName = name + job
+    // need to have the id decalared before setting the state as its changing an older vlaue
+    let id = { [jobName]: false }
+
+    let currentValue = this.state.isStopped
     this.setState({
-      isStopped: false
+      isStopped: {...currentValue, ...id}
     })
   }
 
-  onDeleteLeave(){
-    this.setState({
-      isStopped: true
-    })
+  onDeleteLeave(job, name){
+    let jobName = name + job
+    // need to have the id decalared before setting the state as its changing an older vlaue
+    let id = { [jobName]: true }
+
+    let currentValue = this.state.isStopped
+      this.setState({
+        isStopped: {...currentValue, ...id}
+      })
   }
 
   // returns the username of whoever created the Job
@@ -74,6 +84,35 @@ export class Jobs extends Component {
  
   onDeleteHandler(id){
     this.props.deleteJob(id)
+  }
+
+  // need to seperate from main table creation
+  createJobTableRows(job, name){
+    let jobName = name + job.id
+    return (
+      <tr key={job.id} style={{cursor: 'pointer'}}>
+        <td onClick={this.loadSingleJob.bind(this, job)}>{job.id}</td>
+        <td onClick={this.loadSingleJob.bind(this, job)}>{job.job_name}</td>
+        <td onClick={this.loadSingleJob.bind(this, job)}>{job.job_type}</td>
+        <td onClick={this.loadSingleJob.bind(this, job)}>{job.client_business_name}</td>
+        <td onClick={this.loadSingleJob.bind(this, job)}>{this.getOwnerName(job.owner)}</td>
+        <td onClick={this.loadSingleJob.bind(this, job)}>{job.start_date.slice(0, -10)}</td>
+        <td onClick={this.loadSingleJob.bind(this, job)}>{job.end_date.slice(0, -10)}</td>
+        <td onClick={this.loadSingleJob.bind(this, job)}>${job.cost}</td>
+        <td>
+          <div style={{ width: '3rem' }}>
+            <button 
+              className="btn btn-danger"
+              onClick={this.onDeleteHandler.bind(this, job.id)}
+              onMouseEnter={this.onDeleteHover.bind(this, job.id, name)}
+              onMouseLeave={this.onDeleteLeave.bind(this, job.id, name)}
+            >
+              <Animation animationItemData={animationData} stopped={this.state.isStopped[jobName]} isLoop={false} name={job.id} />
+            </button>
+          </div>
+        </td>
+      </tr>
+    )
   }
 
   // job table generation
@@ -97,29 +136,7 @@ export class Jobs extends Component {
         </thead>
         <tbody>
           { jobs.map(job => (
-
-            <tr key={job.id} style={{cursor: 'pointer'}}>
-              <td onClick={this.loadSingleJob.bind(this, job)}>{job.id}</td>
-              <td onClick={this.loadSingleJob.bind(this, job)}>{job.job_name}</td>
-              <td onClick={this.loadSingleJob.bind(this, job)}>{job.job_type}</td>
-              <td onClick={this.loadSingleJob.bind(this, job)}>{job.client_business_name}</td>
-              <td onClick={this.loadSingleJob.bind(this, job)}>{this.getOwnerName(job.owner)}</td>
-              <td onClick={this.loadSingleJob.bind(this, job)}>{job.start_date.slice(0, -10)}</td>
-              <td onClick={this.loadSingleJob.bind(this, job)}>{job.end_date.slice(0, -10)}</td>
-              <td onClick={this.loadSingleJob.bind(this, job)}>${job.cost}</td>
-              <td>
-                <div style={{ width: '3rem' }}>
-                  <button 
-                    className="btn btn-danger"
-                    onClick={this.onDeleteHandler.bind(this, job.id)}
-                    onMouseEnter={this.onDeleteHover.bind(this)}
-                    onMouseLeave={this.onDeleteLeave.bind(this)}
-                  >
-                    <Animation animationItemData={animationData} stopped={this.state.isStopped} isLoop={false} name={job.id} />
-                  </button>
-                </div>
-              </td>
-            </tr>
+              this.createJobTableRows(job, name)
           )) }
         </tbody>
       </table>
@@ -141,11 +158,23 @@ export class Jobs extends Component {
                           />
     } 
 
+    // determines of the all/my jobs tables should be displayed based on the state passed down from the JobsDashboard
+    let myJobsPage
+    if (this.props.myJobsForm){
+      myJobsPage = this.createJobTable("My Jobs", this.props.jobs)
+    } 
+
+    let allJobsPage
+    if (this.props.allJobsForm){
+      allJobsPage = this.createJobTable("All Jobs", this.props.allJobs)
+    }
+
     return (
       <>
-        {this.createJobTable("My Jobs", this.props.jobs)}
+        {myJobsPage}
         <br></br>
-        {this.createJobTable("All Jobs", this.props.allJobs)}
+        {allJobsPage}
+        <br></br>
         {singleJobWebPage}
       </>
     )

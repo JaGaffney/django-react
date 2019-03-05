@@ -10,9 +10,10 @@ import animationData from '../animations/bin.json'
 
 import LeadsSingle from './LeadsSingle'
 
+// in order to get delete to work could have it as a nested object, isStopped: {lead1: true, lead2: false, lead3: true etc}
 export class Leads extends Component {
   state = {
-    isStopped: true,
+    isStopped: {1: true},
     loadSingle: false,
     leadData: ""
   }
@@ -49,16 +50,26 @@ export class Leads extends Component {
     })
   }
 
-  onDeleteHover(){
+  onDeleteHover(lead, name){
+    let leadName = name + lead
+    // need to have the id decalared before setting the state as its changing an older vlaue
+    let id = { [leadName]: false }
+
+    let currentValue = this.state.isStopped
     this.setState({
-      isStopped: false
+      isStopped: {...currentValue, ...id}
     })
   }
 
-  onDeleteLeave(){
-    this.setState({
-      isStopped: true
-    })
+  onDeleteLeave(lead, name){
+    let leadName = name + lead
+    // need to have the id decalared before setting the state as its changing an older vlaue
+    let id = { [leadName]: true }
+
+    let currentValue = this.state.isStopped
+      this.setState({
+        isStopped: {...currentValue, ...id}
+      })
   }
 
   // returns the username of whoever created the Job
@@ -72,7 +83,8 @@ export class Leads extends Component {
   }
 
   // Creates the rows for the lead table due to being duplicate code, easier to have it as a function
-  createLeadTableRows(lead){
+  createLeadTableRows(lead, name){
+    let leadName = name + lead.id
     return (
       <tr key={lead.id} style={{cursor: 'pointer'}}>
         <td onClick={this.loadSingleLead.bind(this, lead)}>{lead.id}</td>
@@ -86,10 +98,10 @@ export class Leads extends Component {
             <button 
               onClick={this.props.deleteLead.bind(this, lead.id)} 
               className="btn btn-danger btn-sm"
-              onMouseEnter={this.onDeleteHover.bind(this)}
-              onMouseLeave={this.onDeleteLeave.bind(this)}
+              onMouseEnter={this.onDeleteHover.bind(this, lead.id, name)}
+              onMouseLeave={this.onDeleteLeave.bind(this, lead.id, name)}
             >
-              <Animation animationItemData={animationData} stopped={this.state.isStopped} isLoop={false} />
+              <Animation animationItemData={animationData} stopped={this.state.isStopped[leadName]} isLoop={false} />
             </button>
           </div>
         </td>
@@ -119,12 +131,12 @@ export class Leads extends Component {
               if (this.props.loadActivity) {
                 if (lead.active_lead) {
                   return (
-                    this.createLeadTableRows(lead)
+                    this.createLeadTableRows(lead, name)
                   )
                 }
               } else {
                 return (
-                  this.createLeadTableRows(lead)
+                  this.createLeadTableRows(lead, name)
                 )
               }
             }) 
@@ -148,11 +160,22 @@ export class Leads extends Component {
                           />
     } 
 
+    // determines of the all/my leads tables should be displayed based on the state passed down from the LeadsDashboard
+    let myLeadsPage
+    if (this.props.myLeadsForm){
+      myLeadsPage = this.createLeadTable("My Leads", this.props.leads)
+    } 
+
+    let allLeadsPage
+    if (this.props.allLeadsForm){
+      allLeadsPage = this.createLeadTable("All Leads", this.props.allLeads)
+    }
+
     return (
       <>
-        {this.createLeadTable("My Leads", this.props.leads)}
+        {myLeadsPage}
         <br></br>
-        {this.createLeadTable("All Leads", this.props.allLeads)}
+        {allLeadsPage}
         <br></br>
         {singleLeadWebPage}
       </>
