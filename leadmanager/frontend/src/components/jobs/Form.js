@@ -63,7 +63,7 @@ export class Form extends Component {
     // resetting data back to default values
     this.setState({
         job_name: '',
-        job_type: '',
+        job_type: 'Development',
         client_business_name: '',
         client_contact_name: '',
         client_contact_email: '',

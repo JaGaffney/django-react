@@ -8,6 +8,9 @@ import { getUsers } from "../../actions/users";
 import Animation from '../animations/Animation'
 import animationData from '../animations/bin.json'
 
+import Modal from '../layout/Modal'
+import Backdrop from '../layout/Backdrop'
+
 import JobsSingle from './JobsSingle'
 
 export class Jobs extends Component {
@@ -15,7 +18,9 @@ export class Jobs extends Component {
     isStopped: true,
     loadSingle: false,
     jobData: "",
-    ownerName: ""
+    ownerName: "",
+    modal: false,
+    deleteJobData: false,
   }
 
   static propTypes = {
@@ -82,8 +87,33 @@ export class Jobs extends Component {
     return "N/A"
   }
  
-  onDeleteHandler(id){
-    this.props.deleteJob(id)
+  // sets the state of the Modal to be displayed as well as setting basic data propeties of the job
+  onDeleteHandlerModal = (job) => {
+    this.setState({
+      modal: true,
+      deleteJobData: job,
+      ownerName: this.getOwnerName(job.owner)
+    })
+  }
+
+  // if the modal is canceled or closed
+  modalCancelHandler = () => {
+    this.setState({
+      modal: false, 
+      deleteJobData: "",
+      ownerName: ""
+    })
+  }
+
+  // if the modal is confiemd the data is deleted
+  modalDeleteHandler = () => {
+    this.setState({
+      modal: false, 
+      deleteJobData: "",
+      ownerName: ""
+    })
+
+    this.props.deleteJob(this.state.deleteJobData.id)
   }
 
   // need to seperate from main table creation
@@ -103,7 +133,7 @@ export class Jobs extends Component {
           <div style={{ width: '3rem' }}>
             <button 
               className="btn btn-danger"
-              onClick={this.onDeleteHandler.bind(this, job.id)}
+              onClick={this.onDeleteHandlerModal.bind(this, job)}
               onMouseEnter={this.onDeleteHover.bind(this, job.id, name)}
               onMouseLeave={this.onDeleteLeave.bind(this, job.id, name)}
             >
@@ -146,18 +176,6 @@ export class Jobs extends Component {
 
   render() {
 
-    // loads the single web page when the state has changed from a click which passes in data from w/e table location it was in
-    let singleJobWebPage
-    if (this.state.loadSingle){
-      // updates table information with the new data from the db
-      singleJobWebPage = <JobsSingle
-                            jobInfo={this.state.jobData}
-                            JobsPageHandler={this.onJobsPageHandler.bind(this)}
-                            CheckingState={this.state.loadSingle}
-                            OwnerName={this.state.ownerName} 
-                          />
-    } 
-
     // determines of the all/my jobs tables should be displayed based on the state passed down from the JobsDashboard
     let myJobsPage
     if (this.props.myJobsForm){
@@ -171,11 +189,28 @@ export class Jobs extends Component {
 
     return (
       <>
+        {(this.state.modal && <Backdrop />)}
+        {(this.state.modal && <Modal
+                                onCancel={this.modalCancelHandler}
+                                onConfirm={this.modalDeleteHandler}
+                                deleteJobData={this.state.deleteJobData}
+                                ownerName={this.state.ownerName} 
+                              />)}
+
+        {( this.props.myJobsForm && this.createJobTable("My Jobs", this.props.jobs) )}  
+
         {myJobsPage}
         <br></br>
         {allJobsPage}
         <br></br>
-        {singleJobWebPage}
+
+        {(this.state.loadSingle && <JobsSingle
+                            jobInfo={this.state.jobData}
+                            JobsPageHandler={this.onJobsPageHandler.bind(this)}
+                            CheckingState={this.state.loadSingle}
+                            OwnerName={this.state.ownerName} 
+                          />)}
+        
       </>
     )
   }

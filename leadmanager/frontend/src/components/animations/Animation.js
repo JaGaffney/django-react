@@ -10,7 +10,7 @@ export class Animation extends Component {
     // default properties of the animation
     const defaultOptions = {
       loop: false,
-      autoplay: this.props.stopped,
+      autoplay: false,
       animationData: this.props.animationItemData,
       rendererSettings: {
         preserveAspectRatio: 'none'
@@ -25,5 +25,8 @@ export class Animation extends Component {
     )
   }
 }
+
+// sets the default value of stopped to true so animations dont auto start
+Animation.defaultProps = { stopped: true }
 
 export default Animation
