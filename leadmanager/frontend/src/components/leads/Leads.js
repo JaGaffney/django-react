@@ -148,36 +148,20 @@ export class Leads extends Component {
   }
 
   render() {
-    // loads the single web page when the state has changed from a click which passes in data from w/e table location it was in
-    let singleLeadWebPage
-    if (this.state.loadSingle){
-      // updates table information with the new data from the db
-      singleLeadWebPage = <LeadsSingle
-                            leadInfo={this.state.leadData}
-                            LeadPageHandler={this.onLeadsPageHandler.bind(this)}
-                            CheckingState={this.state.loadSingle}
-                            OwnerName={this.state.ownerName} 
-                          />
-    } 
-
-    // determines of the all/my leads tables should be displayed based on the state passed down from the LeadsDashboard
-    let myLeadsPage
-    if (this.props.myLeadsForm){
-      myLeadsPage = this.createLeadTable("My Leads", this.props.leads)
-    } 
-
-    let allLeadsPage
-    if (this.props.allLeadsForm){
-      allLeadsPage = this.createLeadTable("All Leads", this.props.allLeads)
-    }
-
     return (
       <>
-        {myLeadsPage}
+        {( this.props.myLeadsForm && this.createLeadTable("My Leads", this.props.leads) )}
         <br></br>
-        {allLeadsPage}
+
+        {( this.props.allLeadsForm && this.createLeadTable("All Leads", this.props.allLeads)) }
+
         <br></br>
-        {singleLeadWebPage}
+        {( this.state.loadSingle && <LeadsSingle
+                                      leadInfo={this.state.leadData}
+                                      LeadPageHandler={this.onLeadsPageHandler.bind(this)}
+                                      CheckingState={this.state.loadSingle}
+                                      OwnerName={this.state.ownerName} 
+                                    /> )}
       </>
     )
   }

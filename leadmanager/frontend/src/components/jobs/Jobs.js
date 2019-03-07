@@ -175,18 +175,7 @@ export class Jobs extends Component {
   }
 
   render() {
-
-    // determines of the all/my jobs tables should be displayed based on the state passed down from the JobsDashboard
-    let myJobsPage
-    if (this.props.myJobsForm){
-      myJobsPage = this.createJobTable("My Jobs", this.props.jobs)
-    } 
-
-    let allJobsPage
-    if (this.props.allJobsForm){
-      allJobsPage = this.createJobTable("All Jobs", this.props.allJobs)
-    }
-
+    // conditional rendering replacing older rendering way
     return (
       <>
         {(this.state.modal && <Backdrop />)}
@@ -198,10 +187,9 @@ export class Jobs extends Component {
                               />)}
 
         {( this.props.myJobsForm && this.createJobTable("My Jobs", this.props.jobs) )}  
-
-        {myJobsPage}
         <br></br>
-        {allJobsPage}
+
+        {(this.props.allJobsForm && this.createJobTable("All Jobs", this.props.allJobs))}
         <br></br>
 
         {(this.state.loadSingle && <JobsSingle
@@ -210,7 +198,6 @@ export class Jobs extends Component {
                             CheckingState={this.state.loadSingle}
                             OwnerName={this.state.ownerName} 
                           />)}
-        
       </>
     )
   }

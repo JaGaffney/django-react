@@ -43,15 +43,6 @@ export class Dashboard extends Component {
   }
 
   render() {
-
-    // loads the form when the button is clicked
-    let formPage 
-    if (this.state.loadForm){
-      formPage = <Form />
-    } else {
-      formPage
-    }
-    
     return (
       <>
       <br></br>       
@@ -71,7 +62,7 @@ export class Dashboard extends Component {
       <Leads loadActivity={this.state.loadActivity} allLeadsForm={this.state.allLeadsForm} myLeadsForm={this.state.myLeadsForm} />
 
       <br></br>  
-      {formPage}
+      {( this.state.loadForm && <Form /> )}
       
     </>
     )

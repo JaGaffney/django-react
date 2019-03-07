@@ -35,15 +35,6 @@ export class JobsDashboard extends Component {
   }
 
   render() {
-
-    // loads the form when the button is clicked
-    let formPage 
-    if (this.state.loadForm){
-      formPage = <Form />
-    } else {
-      formPage
-    }
-
     return (
       <>
       <br></br>
@@ -59,9 +50,11 @@ export class JobsDashboard extends Component {
           </div>
       </div>
 
+      <br></br>
       <Jobs allJobsForm={this.state.allJobsForm} myJobsForm={this.state.myJobsForm}/>
-
-        {formPage}
+      
+      <br></br>
+      {( this.state.loadForm &&  <Form /> )}
       </>
     )
   }
