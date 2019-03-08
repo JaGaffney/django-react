@@ -270,7 +270,7 @@ export class Jobs extends Component {
       {( this.props.allJobsForm && this.createJobTableMobile("All Jobs", this.props.allJobs) )}
       <br></br>
       </>
-    );
+    )
 
     let tabletView
     if (this.props.isTablet() && !this.props.isMobile()) tabletView = (
@@ -301,7 +301,8 @@ export class Jobs extends Component {
                                 onCancel={this.modalCancelHandler}
                                 onConfirm={this.modalDeleteHandler}
                                 deleteJobData={this.state.deleteJobData}
-                                ownerName={this.state.ownerName} 
+                                ownerName={this.state.ownerName}
+                                modalType={"job"} 
                               />)}
 
         {mobileView}

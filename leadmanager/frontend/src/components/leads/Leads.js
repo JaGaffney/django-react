@@ -9,6 +9,9 @@ import { getUsers } from "../../actions/users";
 import Animation from '../animations/Animation'
 import animationData from '../animations/bin.json'
 
+import Modal from '../layout/Modal'
+import Backdrop from '../layout/Backdrop'
+
 import LeadsSingle from './LeadsSingle'
 
 // in order to get delete to work could have it as a nested object, isStopped: {lead1: true, lead2: false, lead3: true etc}
@@ -16,7 +19,10 @@ export class Leads extends Component {
   state = {
     isStopped: {1: true},
     loadSingle: false,
-    leadData: ""
+    leadData: "",
+    modal: false,
+    deleteLeadData: "",
+    ownerName: ""
   }
 
   static propTypes = {
@@ -72,6 +78,35 @@ export class Leads extends Component {
         isStopped: {...currentValue, ...id}
       })
   }
+  
+  // sets the state of the Modal to be displayed as well as setting basic data propeties of the job
+  onDeleteHandlerModal = (lead) => {
+    this.setState({
+      modal: true,
+      deleteLeadData: lead,
+      ownerName: this.getOwnerName(lead.owner)
+    })
+  }
+
+  // if the modal is canceled or closed
+  modalCancelHandler = () => {
+    this.setState({
+      modal: false, 
+      deleteLeadData: "",
+      ownerName: ""
+    })
+  }
+
+  // if the modal is confiemd the data is deleted
+  modalDeleteHandler = () => {
+    this.setState({
+      modal: false, 
+      deleteLeadData: "",
+      ownerName: ""
+    })
+
+    this.props.deleteLead(this.state.deleteLeadData.id)
+  }
 
   // returns the username of whoever created the Job
   getOwnerName(ID){
@@ -97,7 +132,7 @@ export class Leads extends Component {
         <td>
           <div style={{ width: '3rem' }}>
             <button 
-              onClick={this.props.deleteLead.bind(this, lead.id)} 
+              onClick={this.onDeleteHandlerModal.bind(this, lead)} 
               className="btn btn-danger btn-sm"
               onMouseEnter={this.onDeleteHover.bind(this, lead.id, name)}
               onMouseLeave={this.onDeleteLeave.bind(this, lead.id, name)}
@@ -220,7 +255,7 @@ export class Leads extends Component {
             <td style={{ paddingLeft: '43%' }}>
               <div style={{ width: '3rem' }} >
                 <button 
-                  onClick={this.props.deleteLead.bind(this, lead.id)} 
+                  onClick={this.onDeleteHandlerModal.bind(this, lead)} 
                   className="btn btn-danger btn-sm"
                   onMouseEnter={this.onDeleteHover.bind(this, lead.id, name)}
                   onMouseLeave={this.onDeleteLeave.bind(this, lead.id, name)}
@@ -273,6 +308,14 @@ export class Leads extends Component {
 
     return (
       <>
+        {(this.state.modal && <Backdrop />)}
+        {(this.state.modal && <Modal
+                                onCancel={this.modalCancelHandler}
+                                onConfirm={this.modalDeleteHandler}
+                                deleteLeadData={this.state.deleteLeadData}
+                                ownerName={this.state.ownerName} 
+                                modalType={"lead"} 
+                              />)}
 
         {mobileView}
         {tabletView}
