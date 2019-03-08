@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { withGetScreen } from 'react-getscreen'
 import { getLeads, deleteLead, getAllLeads } from "../../actions/leads";
 
 import { getUsers } from "../../actions/users";
@@ -110,11 +111,11 @@ export class Leads extends Component {
   }
 
   // Lead table generation
-  createLeadTable(name, leads){
+  createLeadTable(name, leads, tableSizeType){
     return (
       <>
         <h2>{name}</h2>
-        <table className="table table-striped">
+        <table className={tableSizeType}>
           <thead>
             <tr>
               <th>ID</th>
@@ -147,13 +148,135 @@ export class Leads extends Component {
     )
   }
 
-  render() {
+  createLeadTableMobile(name, leads){
     return (
       <>
-        {( this.props.myLeadsForm && this.createLeadTable("My Leads", this.props.leads) )}
-        <br></br>
+      <h2>{name}</h2>
+        { leads.map(lead => {
+          if (this.props.loadActivity) {
+            if (lead.active_lead) {
+              return (
+                this.createLeadTableMobileRows(lead, name)
+              )
+            }
+          } else {
+            return (
+              this.createLeadTableMobileRows(lead, name)
+            )
+          }
+        }
+        ) }
+      </>
+    )
+  }
 
-        {( this.props.allLeadsForm && this.createLeadTable("All Leads", this.props.allLeads)) }
+  // need to seperate from main table creation
+  createLeadTableMobileRows(lead, name){
+    let leadName = name + lead.id
+    return (
+      <table className="table table-striped text-center"  key={lead.id}>
+
+        <thead>
+          <tr className="bg-primary" key={lead.id + lead.name}>
+            <th>
+              <div style={{ clear: "both" }}>
+                <p style={{ float: "left" }}>ID: {lead.id}</p>
+                <p style={{ float: "right", width: '50%' }}>Lead Name: {lead.name}</p>
+              </div> 
+            </th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr key={lead.id + lead.email} style={{cursor: 'pointer'}}>
+            <td onClick={this.loadSingleLead.bind(this, lead)}>
+              <p><strong>Email</strong></p>
+              <p>{lead.email}</p>
+            </td>
+          </tr>
+
+          <tr key={lead.id + lead.message}>
+            <td onClick={this.loadSingleLead.bind(this, lead)}>
+              <p><strong>Message</strong></p>
+              <p>{lead.message}</p>
+            </td> 
+          </tr>
+
+          <tr key={lead.id + lead.owner}>
+            <td onClick={this.loadSingleLead.bind(this, lead)}>
+              <p><strong>Lead creator</strong></p>
+              <p>{this.getOwnerName(lead.owner)}</p>
+            </td>
+          </tr>
+
+          <tr key={lead.id + 'active'}>
+            <td onClick={this.loadSingleLead.bind(this, lead)}>
+              <p><strong>Active</strong></p>
+              <p>{lead.active_lead.toString()}</p>
+            </td>
+          </tr>
+
+          <tr key={lead.id + 'delete'} >
+            <td style={{ paddingLeft: '43%' }}>
+              <div style={{ width: '3rem' }} >
+                <button 
+                  onClick={this.props.deleteLead.bind(this, lead.id)} 
+                  className="btn btn-danger btn-sm"
+                  onMouseEnter={this.onDeleteHover.bind(this, lead.id, name)}
+                  onMouseLeave={this.onDeleteLeave.bind(this, lead.id, name)}
+                >
+                <Animation animationItemData={animationData} stopped={this.state.isStopped[leadName]} isLoop={false} />
+              </button>
+              </div>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    )
+  }
+
+  render() {
+
+    let mobileView
+    if (this.props.isMobile() && !this.props.isTablet()) mobileView = (
+      <>
+      {( this.props.myLeadsForm && this.createLeadTableMobile("My Leads", this.props.leads) )}
+      <br></br>
+
+      {( this.props.allLeadsForm && this.createLeadTableMobile("All Leads", this.props.allLeads) )}
+      <br></br>
+      </>
+    )
+
+    let tabletView
+    if (this.props.isTablet() && !this.props.isMobile()) tabletView = (
+      <>
+      {( this.props.myLeadsForm && this.createLeadTable("My Leads", this.props.leads, "table-sm table-striped table-bordered") )}
+      <br></br>
+
+      {( this.props.allLeadsForm && this.createLeadTable("All Leads", this.props.allLeads, "table-sm table-striped table-bordered") )}
+      <br></br>
+      </>
+    )
+
+    let deskTopView
+    if (!this.props.isMobile() && !this.props.isTablet()) deskTopView = (
+      <>
+      {( this.props.myLeadsForm && this.createLeadTable("My Leads", this.props.leads, "table table-striped") )}
+      <br></br>
+
+      {( this.props.allLeadsForm && this.createLeadTable("All Leads", this.props.allLeads, "table table-striped") )}
+      <br></br>
+      </>
+    )
+
+    return (
+      <>
+
+        {mobileView}
+        {tabletView}
+        {deskTopView}
 
         <br></br>
         {( this.state.loadSingle && <LeadsSingle
@@ -173,4 +296,4 @@ const mapStateToProps = state => ({
   users: state.users.users
 })
 
-export default connect(mapStateToProps,{ getLeads, deleteLead, getAllLeads, getUsers })(Leads);
+export default withGetScreen(connect(mapStateToProps,{ getLeads, deleteLead, getAllLeads, getUsers })(Leads));
