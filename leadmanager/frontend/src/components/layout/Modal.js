@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 export class Modal extends Component {
 
@@ -73,5 +74,15 @@ export class Modal extends Component {
     )
   }
 }
+
+// setting proptypes
+Modal.propTypes = {
+  deleteJobData: PropTypes.object,
+  modalType: PropTypes.string,
+  onCancel: PropTypes.func,
+  onConfirm: PropTypes.func,
+  ownerName: PropTypes.string,
+}
+
 
 export default Modal

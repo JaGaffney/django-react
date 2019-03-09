@@ -24,15 +24,6 @@ export class Jobs extends Component {
     deleteJobData: false,
   }
 
-  static propTypes = {
-    jobs: PropTypes.array.isRequired,
-    allJobs: PropTypes.array.isRequired,
-    getJobs: PropTypes.func.isRequired,
-    getAllJobs: PropTypes.func.isRequired,
-    deleteJob: PropTypes.func.isRequired,
-    getUsers: PropTypes.func.isRequired
-  }
-
   componentDidMount() {
     this.props.getJobs()
     this.props.getAllJobs()
@@ -186,7 +177,7 @@ export class Jobs extends Component {
     )
   }
 
-  // need to seperate from main table creation
+  // custom table view for Mobile
   createJobTableMobileRows(name, job){
     let jobName = name + job.id
     return (
@@ -253,7 +244,6 @@ export class Jobs extends Component {
               </div>
             </td>
           </tr>
-
         </tbody>
       </table>
     )
@@ -325,5 +315,19 @@ const mapStateToProps = state => ({
   allJobs: state.jobs.allJobs,
   users: state.users.users
 })
+
+Jobs.propTypes = {
+  jobs: PropTypes.array.isRequired,
+  allJobs: PropTypes.array.isRequired,
+  getJobs: PropTypes.func.isRequired,
+  getAllJobs: PropTypes.func.isRequired,
+  deleteJob: PropTypes.func,
+  getUsers: PropTypes.func.isRequired,
+  allJobsForm: PropTypes.bool,
+  myJobsForm: PropTypes.bool,
+  isDesktop: PropTypes.func,
+  isMobile: PropTypes.func,
+  isTablet: PropTypes.func,
+}
 
 export default withGetScreen(connect(mapStateToProps, { getJobs, getAllJobs, deleteJob, getUsers })(Jobs));

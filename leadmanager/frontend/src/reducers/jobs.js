@@ -6,7 +6,7 @@ const initialState = {
 }
 
 // probally not a good way of updating the state value but i couldnt work out a better way
- let updateStateInfo = (stateArray, action) => {
+let updateStateInfo = (stateArray, action) => {
   let updatedJobs = []
   stateArray.filter(job => {
     if (job.id === action.payload.id) {
@@ -16,7 +16,7 @@ const initialState = {
     }
   })
   return updatedJobs
-  }
+}
 
 // can prob convert GET_ALL_JOBS to GET_JOBS
 export default function(state = initialState, action) {

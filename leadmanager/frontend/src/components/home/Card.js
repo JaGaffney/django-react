@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+
 import { Link } from 'react-router-dom'
 
 export class Card extends Component {
@@ -21,6 +23,12 @@ export class Card extends Component {
             </Link>
         )
     }
+}
+
+// setting proptypes
+Card.propTypes = {
+    titleName: PropTypes.string,
+    description: PropTypes.string,
 }
 
 export default Card

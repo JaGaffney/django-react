@@ -24,10 +24,6 @@ export class Form extends Component {
     isStopped: true
   }
 
-  static propTypes = {
-    addJob: PropTypes.func.isRequired
-  }
-
   // checks for changes inside the form
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value })
@@ -218,5 +214,10 @@ export class Form extends Component {
 const mapStateToProps = state => ({
   auth: state.auth.user.id
 })
+
+Form.propTypes = {
+  addJob: PropTypes.func.isRequired,
+  auth: PropTypes.number
+}
 
 export default connect(mapStateToProps, { addJob })(Form)

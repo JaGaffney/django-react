@@ -22,7 +22,7 @@ const Calender = (props) => (
       timeslots={1}
       events={props.eventList}
       localizer={localizer}
-      views={['month', 'week', 'agenda']} 
+      views={['month', 'agenda']} 
       defaultView='month'
       onSelectEvent={event => onEventSelection(event)}
     />

@@ -17,10 +17,6 @@ export class LeadsSingle extends Component {
     active_lead: "",
   }
 
-  static propTypes = {
-    updateLead: PropTypes.func.isRequired
-  }
-
   // Sets the inital colours
   componentDidMount(){
     this.setState({ 
@@ -223,5 +219,14 @@ export class LeadsSingle extends Component {
     )
   }
 }
+
+LeadsSingle.propTypes = {
+  CheckingState: PropTypes.bool,
+  LeadPageHandler: PropTypes.func,
+  OwnerName: PropTypes.string,
+  leadInfo: PropTypes.object,
+  updateLead: PropTypes.func.isRequired,
+}
+
 
 export default connect(null, { updateLead })(LeadsSingle);

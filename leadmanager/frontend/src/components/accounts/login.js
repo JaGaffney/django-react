@@ -11,11 +11,6 @@ export class Login extends Component {
         password: '',
     }
 
-    static propTypes = {
-        login: PropTypes.func.isRequired,
-        isAuthenticated: PropTypes.bool
-    }
-
     onSubmit = e => {
         e.preventDefault()
         this.props.login(this.state.username, this.state.password)
@@ -81,5 +76,13 @@ export class Login extends Component {
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated
 })
+
+Login.propTypes = {
+    login: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool,
+    history: PropTypes.object,
+    location: PropTypes.object,
+    match: PropTypes.object,
+}
 
 export default connect(mapStateToProps, { login })(Login)

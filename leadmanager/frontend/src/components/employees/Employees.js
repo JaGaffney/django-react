@@ -6,10 +6,6 @@ import { getUsers } from "../../actions/users";
 
 // for somer reason this.props.users is blank but its still generating data??
 export class Employees extends Component {
-  static propTypes = {
-    users: PropTypes.array.isRequired,
-    getUsers: PropTypes.func.isRequired
-  }
 
   componentDidMount() {
     this.props.getUsers()
@@ -26,7 +22,6 @@ export class Employees extends Component {
   }
 
   render() {
-
     return (
       <>
         <h2>Employees</h2>
@@ -59,5 +54,11 @@ export class Employees extends Component {
 const mapStateToProps = state => ({
   users: state.users.users
 })
+
+Employees.propTypes = {
+  users: PropTypes.array.isRequired,
+  getUsers: PropTypes.func.isRequired,
+}
+
 
 export default connect(mapStateToProps, { getUsers })(Employees);

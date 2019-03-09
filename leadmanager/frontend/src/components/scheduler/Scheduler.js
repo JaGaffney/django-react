@@ -15,11 +15,6 @@ export class Scheduler extends Component {
     isLoading: true
   }
 
-  static propTypes = {
-    jobs: PropTypes.array.isRequired,
-    getJobs: PropTypes.func.isRequired
-  }
-
   componentDidMount() {
     this.setState({ jobList: [] })
     this.props.getJobs() 
@@ -61,7 +56,7 @@ export class Scheduler extends Component {
       scheduler = (
         <div className="container h-30" style={{ height: '5rem', width: '5rem' }}>
           <div className="row h-100 justify-content-center align-items-center">
-            <Animation animationItemData={animationData} stopped={false} isLoop={true} name={'spinner'} />
+            <Animation animationItemData={animationData} stopped={false} isLoop={true} name={1} />
           </div>
         </div>
       )
@@ -88,5 +83,13 @@ export class Scheduler extends Component {
 const mapStateToProps = state => ({
   jobs: state.jobs.jobs
 })
+
+Scheduler.propTypes = {
+  jobs: PropTypes.array.isRequired,
+  getJobs: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
+  location: PropTypes.object,
+  match: PropTypes.object,
+}
 
 export default connect(mapStateToProps, { getJobs })(Scheduler);

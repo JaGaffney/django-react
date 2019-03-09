@@ -25,15 +25,6 @@ export class Leads extends Component {
     ownerName: ""
   }
 
-  static propTypes = {
-    leads: PropTypes.array.isRequired,
-    allLeads: PropTypes.array.isRequired,
-    getLeads: PropTypes.func.isRequired,
-    getAllLeads: PropTypes.func.isRequired,
-    deleteLead: PropTypes.func.isRequired,
-    getUsers: PropTypes.func.isRequired
-  }
-
   // onload gets all of the leads data from the api
   componentDidMount() {
     this.props.getLeads()
@@ -338,5 +329,22 @@ const mapStateToProps = state => ({
   allLeads: state.leads.allLeads,
   users: state.users.users
 })
+
+
+Leads.propTypes = {
+  leads: PropTypes.array.isRequired,
+  allLeads: PropTypes.array.isRequired,
+  getLeads: PropTypes.func.isRequired,
+  getAllLeads: PropTypes.func.isRequired,
+  deleteLead: PropTypes.func.isRequired,
+  getUsers: PropTypes.func.isRequired,
+  allLeadsForm: PropTypes.bool,
+  isDesktop: PropTypes.func,
+  isMobile: PropTypes.func,
+  isTablet: PropTypes.func,
+  loadActivity: PropTypes.bool,
+  myLeadsForm: PropTypes.bool,
+  users: PropTypes.array,
+}
 
 export default withGetScreen(connect(mapStateToProps,{ getLeads, deleteLead, getAllLeads, getUsers })(Leads));

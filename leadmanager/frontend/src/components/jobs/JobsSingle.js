@@ -22,10 +22,6 @@ export class JobsSingle extends Component {
     cost: "",
   }
 
-  static propTypes = {
-    updateJob: PropTypes.func.isRequired
-  }
-
   // Sets the inital colours
   componentDidMount(){
     this.setState({ 
@@ -324,6 +320,14 @@ export class JobsSingle extends Component {
       </>
     )
   }
+}
+
+JobsSingle.propTypes = {
+  updateJob: PropTypes.func.isRequired,
+  JobsPageHandler: PropTypes.func,
+  jobInfo: PropTypes.object,
+  CheckingState: PropTypes.bool,
+  OwnerName: PropTypes.string,
 }
 
 export default connect(null, { updateJob })(JobsSingle);

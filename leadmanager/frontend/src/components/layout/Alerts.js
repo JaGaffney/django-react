@@ -85,4 +85,12 @@ const mapStateToProps = state => ({
     message: state.messages
 })
 
+// setting proptypes
+Alerts.propTypes = {
+    alert: PropTypes.object,
+    dispatch: PropTypes.func,
+    error: PropTypes.object,
+    message: PropTypes.object,
+}
+
 export default connect(mapStateToProps)(withAlert(Alerts))
