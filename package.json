@@ -4,15 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack --mode development --watch ./leadmanager/frontend/src/index.js --output ./leadmanager/frontend/static/frontend/main.js",
-    "build": "webpack --mode production ./leadmanager/frontend/src/index.js --output ./leadmanager/frontend/static/frontend/main.js"
+    "dev": "webpack --mode development --watch --config webpack.config.js",
+    "build": "webpack --mode production --config webpack.config.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/JaGaffney/django-react.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Jon Gaffney",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/JaGaffney/django-react/issues"
