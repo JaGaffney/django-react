@@ -295,16 +295,19 @@ export class Jobs extends Component {
                                 modalType={"job"} 
                               />)}
 
-        {mobileView}
-        {tabletView}
-        {deskTopView}
-
+        {(this.state.loadSingle && <Backdrop />)}
         {(this.state.loadSingle && <JobsSingle
                             jobInfo={this.state.jobData}
                             JobsPageHandler={this.onJobsPageHandler.bind(this)}
                             CheckingState={this.state.loadSingle}
                             OwnerName={this.state.ownerName} 
                           />)}
+
+        {mobileView}
+        {tabletView}
+        {deskTopView}
+
+
       </>
     )
   }

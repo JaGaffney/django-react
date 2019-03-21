@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
+
 import Form from './Form'
 import Leads from './Leads'
+
+import Backdrop from '../layout/Backdrop'
 
 export class Dashboard extends Component {
   state = {
@@ -58,12 +61,15 @@ export class Dashboard extends Component {
           </div>
         </div>
       </div>
+
+      <br></br>
+      {( this.state.loadForm && <Backdrop /> )}  
+      {( this.state.loadForm && <Form  onFormHandler={this.onFormHandler.bind(this)}/> )}
       
       <br></br>  
       <Leads loadActivity={this.state.loadActivity} allLeadsForm={this.state.allLeadsForm} myLeadsForm={this.state.myLeadsForm} />
 
-      <br></br>  
-      {( this.state.loadForm && <Form /> )}
+
       
     </>
     )

@@ -120,6 +120,9 @@ export class JobsSingle extends Component {
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
+        
+        <h2>Job Details</h2>
+        <br></br>
 
         <div className="btn-toolbar">
           <button className="btn btn-success ml-2" onClick={this.handleEditMode.bind(this)}>Edit mode</button>
@@ -167,6 +170,8 @@ export class JobsSingle extends Component {
           </button>
         </div>
 
+        <h2>Job Details</h2>
+        <br></br>
         <div className="btn-toolbar">
           <button className="btn btn-success ml-2" onClick={this.handleEditMode.bind(this)}>Edit mode</button>
         </div>
@@ -314,8 +319,6 @@ export class JobsSingle extends Component {
 
     return (
       <>
-        <h2>Jobs Single</h2>
-
         {cardPage}
       </>
     )

@@ -95,6 +95,9 @@ export class LeadsSingle extends Component {
           </button>
         </div>
 
+        <h2>Leads Details</h2>
+        <br></br>
+
         <div className="btn-toolbar">
           <button className="btn btn-success ml-2" onClick={this.handleEditMode.bind(this)}>Edit mode</button>
         </div>
@@ -124,6 +127,9 @@ export class LeadsSingle extends Component {
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
+
+        <h2>Leads Details</h2>
+        <br></br>
 
         <div className="btn-toolbar">
           <button className="btn btn-success ml-2" onClick={this.handleEditMode.bind(this)}>Edit mode</button>
@@ -212,8 +218,6 @@ export class LeadsSingle extends Component {
 
     return (
       <>
-        <h2>Leads Single</h2>
-
         {cardPage}
       </>
     )

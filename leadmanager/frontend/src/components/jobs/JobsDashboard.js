@@ -3,6 +3,8 @@ import React, { Component } from 'react'
 import Form from './Form'
 import Jobs from './Jobs'
 
+import Backdrop from '../layout/Backdrop'
+
 export class JobsDashboard extends Component {
   state = {
     loadForm: false,
@@ -50,11 +52,12 @@ export class JobsDashboard extends Component {
           </div>
       </div>
 
+      
+      {( this.state.loadForm && <Backdrop /> )}
+      {( this.state.loadForm && <Form  onFormHandler={this.onFormHandler.bind(this)}/> )}
+
       <br></br>
       <Jobs allJobsForm={this.state.allJobsForm} myJobsForm={this.state.myJobsForm}/>
-      
-      <br></br>
-      {( this.state.loadForm &&  <Form /> )}
       </>
     )
   }

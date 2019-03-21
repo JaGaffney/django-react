@@ -56,7 +56,16 @@ export class Form extends Component {
 
     return (
       <div className="card card-body mt-4 mb-4">
+
+          <div className="float-right">
+            <button type="button" className="close btn btn-danger" aria-label="Close" onClick={this.props.onFormHandler}>
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+
         <h2>Create new Lead</h2>
+        
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
             <label>Name</label>
@@ -119,7 +128,8 @@ const mapStateToProps = state => ({
 
 Form.propTypes = {
   addLead: PropTypes.func.isRequired,
-  auth: PropTypes.number
+  auth: PropTypes.number,
+  onFormHandler: PropTypes.func
 }
 
 export default connect(mapStateToProps, { addLead })(Form)

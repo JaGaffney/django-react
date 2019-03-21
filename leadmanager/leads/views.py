@@ -14,7 +14,6 @@ class LeadList(generics.ListCreateAPIView):
 
     # this is what sets the queryset to only Leads created by the logged in user
     def get_queryset(self):
-        print(self.request.user)
         return self.request.user.leads.all()
 
 # allows for POST, PUT and DELETE requests to the api of the user is Authenticated

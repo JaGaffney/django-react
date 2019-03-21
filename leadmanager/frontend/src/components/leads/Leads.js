@@ -308,17 +308,21 @@ export class Leads extends Component {
                                 modalType={"lead"} 
                               />)}
 
-        {mobileView}
-        {tabletView}
-        {deskTopView}
-
-        <br></br>
+        {(this.state.loadSingle && <Backdrop />)}
         {( this.state.loadSingle && <LeadsSingle
                                       leadInfo={this.state.leadData}
                                       LeadPageHandler={this.onLeadsPageHandler.bind(this)}
                                       CheckingState={this.state.loadSingle}
                                       OwnerName={this.state.ownerName} 
                                     /> )}
+
+        <br></br>
+        {mobileView}
+        {tabletView}
+        {deskTopView}
+
+        <br></br>
+
       </>
     )
   }
